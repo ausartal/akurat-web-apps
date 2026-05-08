@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react'
 
+import HeroSection from '@/components/dashboard/hero-section'
+import RecentActivity from '@/components/dashboard/recent-activity'
+import StatsCard from '@/components/dashboard/stats-card'
+
 import { getMyProfile } from '@/features/profile/services/profile.service'
 
 export default function DashboardPage() {
@@ -40,44 +44,70 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className='p-10 space-y-4'>
-      <h1 className='text-4xl font-bold'>
-        Welcome back,
-        {' '}
-        {profile.full_name}
-      </h1>
+    <div className='space-y-8'>
+      <HeroSection
+        name={profile.full_name}
+      />
 
-      <div className='space-y-2'>
-        <p>
-          Email:
-          {' '}
-          {profile.email}
-        </p>
+      <section
+        className='grid gap-6 md:grid-cols-2 xl:grid-cols-4'
+      >
+        <StatsCard
+          title='XP'
+          value={profile.xp}
+          description='Current experience points'
+        />
 
-        <p>
-          Role:
-          {' '}
-          {profile.role}
-        </p>
+        <StatsCard
+          title='Level'
+          value={profile.level}
+          description='Your chemistry mastery level'
+        />
 
-        <p>
-          XP:
-          {' '}
-          {profile.xp}
-        </p>
+        <StatsCard
+          title='Streak'
+          value={profile.streak}
+          description='Daily learning streak'
+        />
 
-        <p>
-          Level:
-          {' '}
-          {profile.level}
-        </p>
+        <StatsCard
+          title='Role'
+          value={profile.role}
+          description='Current account role'
+        />
+      </section>
 
-        <p>
-          Streak:
-          {' '}
-          {profile.streak}
-        </p>
-      </div>
+      <section
+        className='grid gap-6 lg:grid-cols-3'
+      >
+        <div className='lg:col-span-2'>
+          <RecentActivity />
+        </div>
+
+        <div
+          className='rounded-2xl border bg-white p-6 shadow-sm'
+        >
+          <h2
+            className='mb-4 text-xl font-semibold'
+          >
+            Profile
+          </h2>
+
+          <div className='space-y-2 text-sm'>
+            <p>
+              Email:
+              {' '}
+              {profile.email}
+            </p>
+
+            <p>
+              Full Name:
+              {' '}
+              {profile.full_name}
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
