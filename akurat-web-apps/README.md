@@ -1,1 +1,0 @@
-# akurat-web-apps
