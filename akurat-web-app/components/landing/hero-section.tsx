@@ -1,8 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowRight, Atom, Award, PlayCircle, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -23,160 +22,149 @@ export function HeroSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8 },
+      transition: { duration: 0.7 },
     },
   }
 
   const floatingVariants = {
     initial: { y: 0 },
     animate: {
-      y: [-20, 20, -20],
-      transition: { duration: 6, repeat: Infinity },
+      y: [-10, 10, -10],
+      transition: { duration: 5.5, repeat: Infinity },
     },
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-indigo-50 pt-20 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          {/* Left Content */}
+    <section className="bg-[#F8FAFC] pb-20 pt-8 sm:pt-10">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-[32px] border border-[#E2E8F0] bg-white/80 p-6 shadow-[0_20px_70px_-32px_rgba(37,99,235,0.45)] md:p-10 lg:p-12">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-8">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="space-y-8"
+            className="space-y-7"
           >
-            {/* Badge */}
-            <motion.div variants={itemVariants} className="inline-flex">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700">
-                <Sparkles className="w-4 h-4" />
-                <span className="text-sm font-medium">Master Chemistry Easily</span>
-              </div>
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 rounded-full border border-[#DBEAFE] bg-[#EFF6FF] px-3 py-1.5 text-xs font-semibold text-[#2563EB]">
+              <Atom className="h-4 w-4" />
+              Modern Chemistry Learning Platform
             </motion.div>
 
-            {/* Heading */}
             <motion.div variants={itemVariants} className="space-y-4">
-              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-4xl font-extrabold leading-[1.05] text-[#0F172A] sm:text-5xl lg:text-[58px]">
                 Master Chemistry{' '}
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  Easily & Effectively
+                <span className="bg-gradient-to-r from-[#2563EB] to-[#4F46E5] bg-clip-text text-transparent">
+                  Easily &amp; Effectively
                 </span>
               </h1>
+              <p className="max-w-xl text-base leading-relaxed text-[#475569] sm:text-lg">
+                AKURAT helps students master chemistry through structured learning paths,
+                interactive materials, and adaptive practice systems.
+              </p>
             </motion.div>
 
-            {/* Subtext */}
-            <motion.p
-              variants={itemVariants}
-              className="text-lg text-gray-600 leading-relaxed"
-            >
-              AKURAT helps students master chemistry through structured learning paths, interactive materials, and adaptive practice systems designed for every learning style.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 pt-4">
+            <motion.div variants={itemVariants} className="flex flex-col gap-3 pt-1 sm:flex-row">
               <Link href="/register">
                 <Button
                   size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+                  className="h-12 rounded-xl bg-[#4F46E5] px-7 text-white shadow-lg shadow-[#4F46E5]/25 transition-all hover:-translate-y-0.5 hover:bg-[#4338CA]"
                 >
                   Start Learning
-                  <ArrowRight className="ml-2 w-4 h-4" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link href="#materials">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-gray-300 text-gray-900 hover:bg-gray-50 font-semibold"
+                  className="h-12 rounded-xl border-[#CBD5E1] bg-white px-7 text-[#0F172A] hover:bg-[#F8FAFC]"
                 >
                   Explore Courses
                 </Button>
               </Link>
             </motion.div>
 
-            {/* Stats */}
-            <motion.div
-              variants={itemVariants}
-              className="pt-8 grid grid-cols-3 gap-6"
-            >
+            <motion.div variants={itemVariants} className="flex items-center gap-2 pt-5">
+              <span className="h-1.5 w-10 rounded-full bg-[#2563EB]" />
+              <span className="h-1.5 w-3 rounded-full bg-[#CBD5E1]" />
+              <span className="h-1.5 w-3 rounded-full bg-[#CBD5E1]" />
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="grid max-w-md grid-cols-3 gap-4 pt-2">
               <div>
-                <p className="text-2xl font-bold text-gray-900">1000+</p>
-                <p className="text-sm text-gray-600">Students</p>
+                <p className="text-2xl font-bold text-[#0F172A]">200+</p>
+                <p className="text-sm text-[#64748B]">Learning Resources</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-900">50+</p>
-                <p className="text-sm text-gray-600">Topics</p>
+                <p className="text-2xl font-bold text-[#0F172A]">98%</p>
+                <p className="text-sm text-[#64748B]">Completion</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-900">4.9/5</p>
-                <p className="text-sm text-gray-600">Rating</p>
+                <p className="text-2xl font-bold text-[#0F172A]">4.9</p>
+                <p className="text-sm text-[#64748B]">Avg Rating</p>
               </div>
             </motion.div>
           </motion.div>
 
-          {/* Right Visual */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative h-full min-h-[500px] hidden lg:flex items-center justify-center"
+            className="relative hidden min-h-[480px] items-center justify-center lg:flex"
           >
-            {/* Floating Cards Background */}
             <motion.div
               variants={floatingVariants}
               initial="initial"
               animate="animate"
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute inset-0"
             >
-              {/* Main Card */}
-              <div className="absolute w-72 h-96 bg-gradient-to-br from-yellow-300 to-yellow-200 rounded-3xl shadow-2xl transform -rotate-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">⚗️</div>
-                  <p className="font-bold text-gray-900 text-xl">Chemistry</p>
-                  <p className="text-gray-700 text-sm mt-2">Master Essential Concepts</p>
+              <div className="absolute inset-4 rounded-[28px] bg-gradient-to-br from-[#EEF2FF] via-[#F8FAFC] to-[#E2E8F0]" />
+
+              <div className="absolute right-10 top-10 h-72 w-72 rounded-full bg-gradient-to-br from-[#FACC15] to-[#FDE68A]" />
+
+              <div className="absolute bottom-8 left-3 h-56 w-56 rounded-full bg-gradient-to-br from-[#4F46E5] to-[#2563EB] shadow-2xl shadow-[#4F46E5]/40" />
+
+              <div className="absolute left-16 top-14 rounded-2xl border border-white/70 bg-white px-4 py-2 shadow-xl">
+                <div className="flex items-center gap-2 text-[#0F172A]">
+                  <PlayCircle className="h-4 w-4 text-[#F59E0B]" />
+                  <span className="text-xs font-semibold">Live Class</span>
                 </div>
               </div>
 
-              {/* Badge 1 */}
+              <div className="absolute left-6 top-32 rounded-2xl border border-white/70 bg-white px-4 py-3 shadow-xl">
+                <div className="flex items-start gap-2">
+                  <div className="rounded-full bg-[#EF4444] p-1.5 text-white">
+                    <Award className="h-3.5 w-3.5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-[#0F172A]">205+</p>
+                    <p className="text-[11px] text-[#64748B]">Learning Resources</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute bottom-16 right-8 rounded-2xl border border-white/70 bg-white px-4 py-3 shadow-xl">
+                <div className="flex items-start gap-2">
+                  <div className="rounded-full bg-[#FACC15] p-1.5 text-[#0F172A]">
+                    <Users className="h-3.5 w-3.5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-[#0F172A]">98</p>
+                    <p className="text-[11px] text-[#64748B]">Online Students</p>
+                  </div>
+                </div>
+              </div>
+
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                className="absolute top-8 right-12 w-20 h-20 bg-red-500 rounded-full shadow-lg flex items-center justify-center flex-col"
+                transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
+                className="absolute right-20 top-24 flex h-14 w-14 items-center justify-center rounded-full border-2 border-dashed border-[#2563EB] bg-white text-[#2563EB]"
               >
-                <span className="text-2xl font-bold text-white">98</span>
-                <span className="text-xs text-white">Score</span>
+                <Atom className="h-6 w-6" />
               </motion.div>
-
-              {/* Badge 2 */}
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-                className="absolute bottom-12 left-8 w-20 h-20 bg-blue-500 rounded-full shadow-lg flex items-center justify-center flex-col"
-              >
-                <span className="text-2xl font-bold text-white">🏆</span>
-                <span className="text-xs text-white text-center">Pro</span>
-              </motion.div>
-
-              {/* Floating Circle */}
-              <motion.div
-                animate={{ y: [-30, 30, -30] }}
-                transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute top-32 right-24 w-16 h-16 bg-indigo-600 rounded-full shadow-lg opacity-80"
-              />
             </motion.div>
-
-            {/* Floating Elements */}
-            <motion.div
-              className="absolute top-20 left-8 w-12 h-12 bg-yellow-400 rounded-full opacity-60"
-              animate={{ y: [-20, 20, -20] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.div
-              className="absolute bottom-32 right-16 w-16 h-16 border-2 border-blue-400 rounded-full opacity-40"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            />
           </motion.div>
+        </div>
         </div>
       </div>
     </section>

@@ -2,43 +2,41 @@
 
 import { motion } from 'framer-motion'
 import { Star } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 const testimonials = [
   {
-    name: 'Arjun Sharma',
-    role: 'JEE Main Aspirant',
+    name: 'Ana',
+    role: 'Student',
     content:
-      'AKURAT transformed my chemistry preparation. The structured approach and expert guidance helped me score 98/100 in chemistry. Highly recommended!',
+      'Courses really helped me understand chemistry concepts easily. The learning videos were clear and the practice made me more confident.',
     rating: 5,
-    avatar: '👨‍🎓',
-    color: 'from-blue-500 to-cyan-500',
+    avatar: 'A',
   },
   {
-    name: 'Priya Verma',
-    role: 'Chemistry Olympiad Finalist',
+    name: 'Asep',
+    role: 'Parent',
     content:
-      'The advanced topics and problem-solving techniques taught here are incredible. I got selected for the International Olympiad thanks to AKURAT!',
+      'The olympiad chemistry class gives excellent structured lessons. My child improved significantly after joining AKURAT.',
     rating: 5,
-    avatar: '👩‍🎓',
-    color: 'from-purple-500 to-pink-500',
+    avatar: 'As',
   },
   {
-    name: 'Rohan Desai',
-    role: 'College Student',
+    name: 'Budi',
+    role: 'High School Student',
     content:
-      'I was struggling with organic chemistry until I joined AKURAT. The clarity of explanations and practice problems made everything clear.',
+      'I was worried chemistry would be hard, but AKURAT made every lesson step-by-step and practical. It is now one of my best subjects.',
     rating: 5,
-    avatar: '🧑‍🎓',
-    color: 'from-green-500 to-emerald-500',
+    avatar: 'B',
   },
   {
-    name: 'Isha Patel',
-    role: 'NEET Qualifier',
+    name: 'Cici',
+    role: 'University Student',
     content:
-      'AKURAT is the best investment I made for my studies. The mentors are responsive, and the content is comprehensive. I qualified NEET with flying colors!',
+      'The mentoring community and chapter quizzes are excellent. I now feel better prepared for exams and chemistry projects.',
     rating: 5,
-    avatar: '👩‍⚕️',
-    color: 'from-yellow-500 to-orange-500',
+    avatar: 'C',
   },
 ]
 
@@ -64,63 +62,54 @@ export function TestimonialsSection() {
   }
 
   return (
-    <section id="testimonials" className="py-20 bg-gradient-to-b from-gray-900 to-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-            What do they say about <span className="text-blue-400">AKURAT?</span>
-          </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Join thousands of students who've transformed their chemistry skills
-          </p>
-        </motion.div>
-
-        {/* Testimonials Grid */}
+    <section id="testimonials" className="bg-[#1E1B7A] py-20">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 gap-8"
+          className="grid gap-7 lg:grid-cols-[0.95fr_1.05fr]"
         >
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              whileHover={{ y: -4, transition: { duration: 0.3 } }}
-              className="relative p-8 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 hover:border-blue-500/50 transition-all shadow-lg hover:shadow-xl group"
-            >
-              {/* Avatar */}
-              <div className={`absolute -top-6 right-8 w-14 h-14 rounded-full bg-gradient-to-br ${testimonial.color} text-3xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
-                {testimonial.avatar}
-              </div>
+          <motion.div variants={itemVariants} className="space-y-5">
+            <h2 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl">
+              What do they say about
+              <span className="text-[#FACC15]"> AKURAT?</span>
+            </h2>
+            <p className="max-w-sm text-sm leading-relaxed text-[#C7D2FE] sm:text-base">
+              Don&apos;t hesitate to join. Learners and parents experience a different chemistry journey with AKURAT.
+            </p>
+            <Link href="/register">
+              <Button className="mt-2 rounded-xl bg-[#4F46E5] px-6 text-white hover:bg-[#4338CA]">Join Now</Button>
+            </Link>
+          </motion.div>
 
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p className="text-gray-100 mb-6 leading-relaxed text-base">
-                "{testimonial.content}"
-              </p>
-
-              {/* Author */}
-              <div className="pt-4 border-t border-slate-700">
-                <p className="text-white font-semibold">{testimonial.name}</p>
-                <p className="text-gray-400 text-sm">{testimonial.role}</p>
-              </div>
-            </motion.div>
-          ))}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {testimonials.map((testimonial, index) => (
+              <motion.article
+                key={testimonial.name + index}
+                variants={itemVariants}
+                whileHover={{ y: -4 }}
+                className="rounded-2xl border border-white/15 bg-white p-5 shadow-lg"
+              >
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EEF2FF] text-xs font-bold text-[#4F46E5]">
+                      {testimonial.avatar}
+                    </div>
+                    <p className="text-sm font-semibold text-[#0F172A]">{testimonial.name}</p>
+                  </div>
+                  <div className="flex items-center gap-0.5">
+                    {Array.from({ length: testimonial.rating }).map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-[#FACC15] text-[#FACC15]" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm leading-relaxed text-[#334155]">“{testimonial.content}”</p>
+                <p className="mt-3 text-xs font-medium text-[#64748B]">{testimonial.role}</p>
+              </motion.article>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

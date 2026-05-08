@@ -3,80 +3,75 @@
 import { motion } from 'framer-motion'
 import {
   Atom,
-  Flame,
+  Blocks,
+  FlaskConical,
+  Gauge,
+  Orbit,
+  Percent,
+  Scale,
   Droplet,
   Link as LinkIcon,
-  Zap,
-  Beaker,
 } from 'lucide-react'
 
 const materials = [
   {
-    icon: Atom,
     title: 'Atomic Structure',
-    description: 'Master atomic theory and electron configuration',
-    color: 'from-blue-500 to-cyan-500',
+    icon: Atom,
+    description: 'Understand particles, orbitals, and electron configuration.',
   },
   {
-    icon: Flame,
     title: 'Periodic Table',
-    description: 'Learn periodic trends and element properties',
-    color: 'from-orange-500 to-red-500',
+    icon: Blocks,
+    description: 'Master periodic trends, families, and element behavior.',
   },
   {
-    icon: Beaker,
     title: 'Stoichiometry',
-    description: 'Perfect your mole calculations and reactions',
-    color: 'from-green-500 to-emerald-500',
+    icon: Scale,
+    description: 'Solve mole concepts and balanced reaction calculations.',
   },
   {
-    icon: LinkIcon,
     title: 'Chemical Bonding',
-    description: 'Understand molecular structures and bonding',
-    color: 'from-purple-500 to-pink-500',
+    icon: LinkIcon,
+    description: 'Learn ionic, covalent, and molecular structure models.',
   },
   {
-    icon: Flame,
     title: 'Thermochemistry',
-    description: 'Study energy and enthalpy in reactions',
-    color: 'from-yellow-500 to-orange-500',
+    icon: Gauge,
+    description: 'Analyze energy changes, enthalpy, and reaction heat.',
   },
   {
-    icon: Droplet,
     title: 'Solution Chemistry',
-    description: 'Master concentrations and solution properties',
-    color: 'from-blue-500 to-teal-500',
+    icon: Droplet,
+    description: 'Explore concentration, solubility, and solution behavior.',
   },
   {
-    icon: Beaker,
     title: 'Organic Chemistry',
-    description: 'Learn carbon compounds and reactions',
-    color: 'from-indigo-500 to-purple-500',
+    icon: FlaskConical,
+    description: 'Build foundations in carbon compounds and reactions.',
   },
   {
-    icon: Zap,
     title: 'Reaction Rate',
-    description: 'Understand kinetics and catalysts',
-    color: 'from-red-500 to-pink-500',
+    icon: Percent,
+    description: 'Understand kinetics, factors, and catalyst influence.',
   },
 ]
 
 export function LearningMaterialsSection() {
   return (
-    <section id="materials" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="materials" className="bg-[#F8FAFC] py-20">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-14 text-center"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-extrabold text-[#0F172A] sm:text-4xl">
             Chemistry Materials We Teach
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Comprehensive coverage of all major chemistry topics
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-[#64748B] sm:text-base">
+            A complete set of chemistry topics designed for strong conceptual understanding and exam readiness.
           </p>
         </motion.div>
 
@@ -85,42 +80,40 @@ export function LearningMaterialsSection() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="relative"
         >
-          {materials.map((material, index) => {
-            const Icon = material.icon
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="group relative overflow-hidden rounded-2xl p-6 bg-gradient-to-br h-full hover:shadow-xl transition-all duration-300"
-              >
-                <div
-                  className={bsolute inset-0 bg-gradient-to-br ${material.color} opacity-10 group-hover:opacity-20 transition-opacity}
-                />
+          <div className="hide-scrollbar flex snap-x gap-4 overflow-x-auto pb-2">
+            {materials.map((material, index) => {
+              const Icon = material.icon
 
-                <div className="relative z-10">
-                  <div className={w-12 h-12 rounded-xl bg-gradient-to-br ${material.color} text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform}>
-                    <Icon className="w-6 h-6" />
+              return (
+                <motion.article
+                  key={material.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: index * 0.03 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -4 }}
+                  className="min-h-40 min-w-[250px] snap-start rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-sm transition-all hover:border-[#BFDBFE] hover:shadow-md sm:min-w-[265px]"
+                >
+                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-[#EEF2FF] text-[#4F46E5]">
+                    <Icon className="h-5 w-5" />
                   </div>
+                  <h3 className="mb-1.5 text-sm font-semibold text-[#0F172A] sm:text-base">{material.title}</h3>
+                  <p className="text-xs leading-relaxed text-[#64748B] sm:text-sm">{material.description}</p>
+                </motion.article>
+              )
+            })}
+          </div>
 
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    {material.title}
-                  </h3>
-
-                  <p className="text-sm text-gray-600">
-                    {material.description}
-                  </p>
-                </div>
-
-                <div className={bsolute inset-0 rounded-2xl border border-gray-200 group-hover:border-gray-300 transition-colors pointer-events-none} />
-              </motion.div>
-            )
-          })}
+          <motion.div
+            animate={{ x: [0, 8, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity }}
+            className="pointer-events-none absolute -right-2 top-1/2 hidden -translate-y-1/2 rounded-full border border-[#E2E8F0] bg-white p-2 text-[#4F46E5] shadow-sm lg:block"
+            aria-hidden="true"
+          >
+            <Orbit className="h-4 w-4" />
+          </motion.div>
         </motion.div>
       </div>
     </section>

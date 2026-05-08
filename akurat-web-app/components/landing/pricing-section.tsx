@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { CheckCircle2, Star } from 'lucide-react'
+import { CheckCircle2, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -9,45 +9,45 @@ const pricingPlans = [
   {
     name: 'Regular Class',
     price: 75,
+    period: '/ month',
     description: 'Perfect for regular learning',
     features: [
-      'Basic video lessons',
-      'Practice problems',
-      'Email support',
-      'Certificate of completion',
-      'Lifetime access',
+      'Basic chemistry tutorial package',
+      'Weekly practice and mini quiz access',
+      'Structured chapter progression',
+      'Learning dashboard and progress view',
+      'Forum access for peer support',
     ],
     highlighted: false,
   },
   {
     name: 'Intensive Preparation',
-    price: 599,
-    period: 'per month',
+    price: 99,
+    period: '/ month',
     description: 'Ideal for competitive exams',
     features: [
-      'All regular features',
-      'Live Q&A sessions',
-      'Detailed feedback',
-      'Mock tests & practice',
-      'Priority support',
-      'Personalized study plan',
-      'Interview preparation',
+      'Chemistry preparation for school exams',
+      'Guided practice and deep-dive sessions',
+      'Advanced quiz and mock test modules',
+      'Performance analytics and action plan',
+      'Mentor check-ins and priority response',
+      'University prep-oriented chapter track',
     ],
     highlighted: true,
-    badge: 'Most Popular',
+    badge: 'Recommended',
   },
   {
     name: 'Olympiad Class',
-    price: 1499,
-    period: 'per month',
+    price: 149,
+    period: '/ month',
     description: 'Advanced level mastery',
     features: [
-      'All intensive features',
-      '1-on-1 mentoring',
-      'Advanced problems',
-      'Resource library access',
-      '24/7 support',
-      'Competition strategies',
+      'Olympiad and competition chemistry path',
+      'High-difficulty conceptual problem bank',
+      'Premium resource and strategy workshops',
+      'Mentor-led evaluation and corrections',
+      'Dedicated challenge sets each week',
+      'Advanced theory + application modules',
     ],
     highlighted: false,
   },
@@ -75,103 +75,80 @@ export function PricingSection() {
   }
 
   return (
-    <section id="pricing" className="py-20 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <section id="pricing" className="bg-white py-20">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-14 text-center"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Our Featured <span className="text-blue-600">Classes</span>
+          <h2 className="text-3xl font-extrabold text-[#0F172A] sm:text-4xl">
+            Our Featured Class
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Choose the perfect plan for your learning journey
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-[#64748B] sm:text-base">
+            We offer chemistry classes designed to optimize your learning progress.
           </p>
         </motion.div>
 
-        {/* Pricing Cards */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-end"
+          className="grid items-stretch gap-6 lg:grid-cols-3"
         >
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className={`relative rounded-2xl transition-all duration-300 overflow-hidden group ${
+              whileHover={{ y: -7, transition: { duration: 0.25 } }}
+              className={`relative overflow-hidden rounded-3xl border p-6 transition-all duration-300 sm:p-7 ${
                 plan.highlighted
-                  ? 'lg:scale-105 border-2 border-blue-500 shadow-2xl'
-                  : 'border border-gray-200 hover:border-gray-300 shadow-lg hover:shadow-xl'
-              } ${
-                plan.highlighted ? 'bg-gradient-to-br from-blue-50 to-indigo-50' : 'bg-white'
+                  ? 'border-[#4F46E5] bg-gradient-to-br from-[#EEF2FF] via-white to-[#F8FAFC] shadow-[0_20px_50px_-30px_rgba(79,70,229,0.6)] lg:scale-[1.02]'
+                  : index === 2
+                    ? 'border-[#FDE68A] bg-[#FFFBEB] shadow-sm'
+                    : 'border-[#E2E8F0] bg-white shadow-sm'
               }`}
             >
-              {/* Badge */}
               {plan.badge && (
-                <div className="absolute top-4 right-4 z-10">
-                  <div className="flex items-center gap-1 px-3 py-1 bg-yellow-400 text-yellow-900 rounded-full text-xs font-semibold">
-                    <Star className="w-3 h-3" />
+                <div className="absolute right-4 top-4 z-10">
+                  <div className="flex items-center gap-1 rounded-full bg-[#FACC15] px-3 py-1 text-xs font-semibold text-[#0F172A]">
+                    <Sparkles className="h-3 w-3" />
                     {plan.badge}
                   </div>
                 </div>
               )}
 
-              {/* Gradient Overlay for Premium */}
-              {plan.highlighted && (
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-indigo-600/10 pointer-events-none" />
-              )}
+              <div className="flex h-full flex-col">
+                <h3 className="text-xl font-bold text-[#0F172A]">{plan.name}</h3>
+                <p className="mt-1 text-sm text-[#64748B]">{plan.description}</p>
 
-              <div className="relative z-10 p-8 flex flex-col h-full">
-                {/* Title */}
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  {plan.name}
-                </h3>
-                <p className="text-gray-600 text-sm mb-6">{plan.description}</p>
-
-                {/* Pricing */}
-                <div className="mb-8">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-bold text-gray-900">
-                      ₹{plan.price}
-                    </span>
-                    {plan.period && (
-                      <span className="text-gray-600 text-sm">{plan.period}</span>
-                    )}
-                  </div>
-                  {!plan.period && (
-                    <p className="text-gray-600 text-sm mt-2">One-time payment</p>
-                  )}
+                <div className="mt-6 flex items-end gap-1">
+                  <span className="text-4xl font-extrabold text-[#0F172A]">${plan.price}</span>
+                  <span className="pb-1 text-sm text-[#64748B]">{plan.period}</span>
                 </div>
 
-                {/* Features */}
-                <div className="flex-1 space-y-4 mb-8">
+                <div className="mt-6 flex-1 space-y-3">
                   {plan.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700 text-sm">{feature}</span>
+                    <div key={featureIndex} className="flex items-start gap-2.5">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#FACC15]" />
+                      <span className="text-sm text-[#334155]">{feature}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* CTA Button */}
-                <Link href="/register" className="w-full">
+                <Link href="/register" className="mt-7 w-full">
                   <Button
                     className={`w-full font-semibold transition-all ${
                       plan.highlighted
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl'
-                        : 'bg-gray-900 hover:bg-gray-800 text-white'
+                        ? 'bg-[#4F46E5] text-white hover:bg-[#4338CA]'
+                        : 'bg-[#4F46E5] text-white hover:bg-[#4338CA]'
                     }`}
                     size="lg"
                   >
-                    Get Started
+                    Join Class
                   </Button>
                 </Link>
               </div>

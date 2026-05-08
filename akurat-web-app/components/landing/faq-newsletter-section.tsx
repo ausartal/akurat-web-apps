@@ -1,40 +1,35 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Mail, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const faqs = [
   {
-    question: 'Is AKURAT suitable for all chemistry levels?',
+    question: 'Which class is right for me?',
     answer:
-      'Yes, AKURAT caters to students from high school through college level. Our adaptive learning system adjusts content based on your proficiency.',
+      'Start with Regular Class for fundamentals, choose Intensive Preparation for exams, and Olympiad Class for advanced competition training.',
   },
   {
-    question: 'How do I access the learning materials?',
+    question: 'How do I register to take classes?',
     answer:
-      'Once you register, you get instant access to all video lectures, study materials, practice problems, and quiz modules through our web and mobile platform.',
+      'Click Sign Up, complete your profile, pick a class, and you can start learning immediately from your dashboard.',
   },
   {
-    question: 'Is there a money-back guarantee?',
+    question: 'Is there a free class to take first?',
     answer:
-      'We offer a 7-day money-back guarantee if you\'re not satisfied with our content. No questions asked.',
+      'AKURAT provides selected trial materials so you can evaluate lesson quality before choosing a paid class.',
   },
   {
-    question: 'Can I get a refund after the trial period?',
+    question: 'What kind of material is taught in class?',
     answer:
-      'After the 7-day trial, we don\'t offer refunds, but you can pause your subscription anytime. You retain access to your progress data.',
+      'You will learn theory explanations, guided examples, chapter quizzes, and exam-style chemistry problem solving.',
   },
   {
-    question: 'What if I need help with specific topics?',
+    question: 'Are the instructors experienced?',
     answer:
-      'Our expert mentors are available 24/7 in the discussion forum. You can also book 1-on-1 sessions with our chemistry experts.',
-  },
-  {
-    question: 'Will I get a certificate after completing the course?',
-    answer:
-      'Yes! Upon course completion, you\'ll receive a verifiable certificate that you can share on your resume and LinkedIn profile.',
+      'Yes, classes are taught by experienced mentors with strong academic and competition coaching backgrounds.',
   },
 ]
 
@@ -73,76 +68,70 @@ export function FaqNewsletterSection() {
   }
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Newsletter Section */}
+    <section id="faq" className="bg-[#F8FAFC] py-20">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            className="space-y-6 rounded-3xl border border-[#E2E8F0] bg-white p-7 shadow-sm"
           >
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
-                Don't miss any information from us!
+              <h2 className="text-3xl font-extrabold leading-tight text-[#0F172A] sm:text-4xl">
+                Don&apos;t miss any information from us!
               </h2>
-              <p className="text-lg text-gray-600">
-                Subscribe to get exclusive chemistry tips, study strategies, and special course offers directly to your inbox.
+              <p className="mt-3 text-sm leading-relaxed text-[#64748B] sm:text-base">
+                Sign up for our newsletter for chemistry updates, useful study tips, and class announcements.
               </p>
             </div>
 
-            {/* Subscription Form */}
             <form onSubmit={handleSubscribe} className="space-y-4">
-              <div className="relative">
+              <label className="relative block">
                 <input
                   type="email"
-                  placeholder="Enter your email address"
+                  placeholder="Write your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-6 py-4 rounded-xl border border-gray-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="h-12 w-full rounded-xl border border-[#CBD5E1] px-4 pr-12 text-sm text-[#0F172A] outline-none transition-all placeholder:text-[#94A3B8] focus:border-[#4F46E5] focus:ring-2 focus:ring-[#C7D2FE]"
                 />
-              </div>
+                <Mail className="pointer-events-none absolute right-4 top-3.5 h-5 w-5 text-[#94A3B8]" />
+              </label>
 
               <Button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-all flex items-center justify-center gap-2"
+                className="h-11 rounded-xl bg-[#4F46E5] px-5 text-white hover:bg-[#4338CA]"
               >
-                <Send className="w-4 h-4" />
-                Subscribe Now
+                <Send className="mr-2 h-4 w-4" />
+                Subscribe
               </Button>
 
               {subscribed && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-3 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm font-medium"
+                  className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm font-medium text-emerald-700"
                 >
-                  ✓ Thanks for subscribing! Check your email for updates.
+                  Thanks for subscribing! Check your inbox for AKURAT updates.
                 </motion.div>
               )}
             </form>
 
-            {/* Benefits */}
-            <div className="space-y-3 pt-4">
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                <span className="text-gray-700">Weekly chemistry tips</span>
+            <div className="space-y-2 pt-1">
+              <div className="flex items-center gap-2 text-sm text-[#64748B]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#2563EB]" /> Weekly chemistry insights
               </div>
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                <span className="text-gray-700">Exclusive discount offers</span>
+              <div className="flex items-center gap-2 text-sm text-[#64748B]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#4F46E5]" /> New class and feature announcements
               </div>
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                <span className="text-gray-700">Study strategies & tips</span>
+              <div className="flex items-center gap-2 text-sm text-[#64748B]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" /> Practical exam preparation tips
               </div>
             </div>
           </motion.div>
 
-          {/* FAQ Section */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -150,7 +139,7 @@ export function FaqNewsletterSection() {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-8">
+            <h2 className="mb-5 text-3xl font-extrabold leading-tight text-[#0F172A] sm:text-4xl">
               About Learning Chemistry with Us!
             </h2>
 
@@ -165,19 +154,20 @@ export function FaqNewsletterSection() {
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="border border-gray-200 rounded-xl overflow-hidden hover:border-blue-300 transition-colors"
+                  className="overflow-hidden rounded-xl border border-[#E2E8F0] bg-white transition-colors hover:border-[#BFDBFE]"
                 >
                   <button
                     onClick={() =>
                       setOpenIndex(openIndex === index ? null : index)
                     }
-                    className="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors"
+                    className="flex w-full items-center justify-between px-5 py-4 text-left hover:bg-[#F8FAFC]"
+                    aria-expanded={openIndex === index}
                   >
-                    <span className="text-left font-semibold text-gray-900">
+                    <span className="pr-3 text-sm font-semibold text-[#1E293B] sm:text-base">
                       {faq.question}
                     </span>
                     <ChevronDown
-                      className={`w-5 h-5 text-gray-600 transition-transform flex-shrink-0 ${
+                      className={`h-5 w-5 shrink-0 text-[#64748B] transition-transform ${
                         openIndex === index ? 'rotate-180' : ''
                       }`}
                     />
@@ -190,9 +180,9 @@ export function FaqNewsletterSection() {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="border-t border-gray-200 bg-gray-50"
+                        className="border-t border-[#E2E8F0] bg-[#F8FAFC]"
                       >
-                        <p className="px-6 py-4 text-gray-700 leading-relaxed">
+                        <p className="px-5 py-4 text-sm leading-relaxed text-[#475569] sm:text-base">
                           {faq.answer}
                         </p>
                       </motion.div>

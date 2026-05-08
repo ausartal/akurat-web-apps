@@ -2,58 +2,58 @@
 
 import { motion } from 'framer-motion'
 import {
-  BookOpen,
+  CircleHelp,
+  FileBadge,
   MessageCircle,
-  BarChart3,
-  Users,
+  MonitorPlay,
+  NotebookTabs,
   Brain,
-  Zap,
 } from 'lucide-react'
 
 const features = [
   {
-    icon: BookOpen,
+    icon: MonitorPlay,
     title: 'Video Tutorials',
-    description: 'Learn chemistry concepts through engaging video tutorials explained by expert instructors.',
-    color: 'bg-blue-100',
-    iconColor: 'text-blue-600',
+    description: 'Watch structured chemistry lessons from fundamentals to advanced topics.',
+    tone: 'blue',
   },
   {
     icon: MessageCircle,
     title: 'Discussion Forum',
-    description: 'Connect with peers, ask questions, and discuss chemistry concepts in our active community.',
-    color: 'bg-purple-100',
-    iconColor: 'text-purple-600',
+    description: 'Join active topic discussions and ask experts when concepts feel difficult.',
+    tone: 'indigo',
   },
   {
-    icon: BarChart3,
+    icon: CircleHelp,
     title: 'Interactive Quiz',
-    description: 'Test your knowledge with interactive quizzes, practice problems, and instant feedback.',
-    color: 'bg-yellow-100',
-    iconColor: 'text-yellow-600',
+    description: 'Practice with adaptive quizzes and instant feedback on every problem.',
+    tone: 'blue',
   },
   {
-    icon: Users,
+    icon: NotebookTabs,
+    title: 'Learning Materials',
+    description: 'Access concise notes, visual summaries, and chapter-based resources.',
+    tone: 'indigo',
+  },
+  {
+    icon: FileBadge,
     title: 'Mentor Guidance',
-    description: 'Get personalized support from experienced chemistry tutors and mentors.',
-    color: 'bg-red-100',
-    iconColor: 'text-red-600',
+    description: 'Get targeted feedback and personalized support from chemistry mentors.',
+    tone: 'yellow',
   },
   {
     icon: Brain,
     title: 'Adaptive Learning',
-    description: 'Our AI-powered system adapts to your learning pace and focuses on your weak areas.',
-    color: 'bg-green-100',
-    iconColor: 'text-green-600',
-  },
-  {
-    icon: Zap,
-    title: 'Learning Materials',
-    description: 'Access comprehensive study materials, notes, and resources for every chemistry topic.',
-    color: 'bg-indigo-100',
-    iconColor: 'text-indigo-600',
+    description: 'Smart recommendations help you improve weak areas faster and smarter.',
+    tone: 'blue',
   },
 ]
+
+const toneClasses: Record<string, { bg: string; icon: string }> = {
+  blue: { bg: 'bg-[#EEF4FF]', icon: 'text-[#2563EB]' },
+  indigo: { bg: 'bg-[#EEF2FF]', icon: 'text-[#4F46E5]' },
+  yellow: { bg: 'bg-[#FEF9C3]', icon: 'text-[#CA8A04]' },
+}
 
 export function FeaturesSection() {
   const containerVariants = {
@@ -77,56 +77,64 @@ export function FeaturesSection() {
   }
 
   return (
-    <section id="features" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <section id="features" className="bg-[#F8FAFC] py-20">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-14 grid gap-5 md:grid-cols-[1fr_1fr] md:items-end"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            What do you get at <span className="text-blue-600">AKURAT?</span>
+          <h2 className="max-w-lg text-3xl font-extrabold leading-tight text-[#0F172A] sm:text-4xl">
+            What do you get at <span className="text-[#4F46E5]">AKURAT</span>?
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Everything you need to master chemistry effectively
+          <p className="max-w-lg text-sm leading-relaxed text-[#64748B] sm:text-base">
+            AKURAT is an online learning platform designed to support chemistry learners with practical,
+            structured, and outcome-focused tools.
           </p>
         </motion.div>
 
-        {/* Features Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {features.map((feature, index) => {
             const Icon = feature.icon
+            const tone = toneClasses[feature.tone]
+
             return (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group p-6 rounded-2xl border border-gray-200 hover:border-blue-200 hover:shadow-lg transition-all duration-300 bg-white"
+                whileHover={{ y: -5 }}
+                className="group rounded-3xl border border-[#E2E8F0] bg-white p-6 shadow-sm transition-all duration-300 hover:border-[#BFDBFE] hover:shadow-[0_18px_40px_-28px_rgba(37,99,235,0.55)]"
               >
-                {/* Icon */}
-                <div className={`w-12 h-12 ${feature.color} ${feature.iconColor} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <Icon className="w-6 h-6" />
+                <div className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl ${tone.bg} ${tone.icon} transition-transform group-hover:scale-105`}>
+                  <Icon className="h-6 w-6" />
                 </div>
 
-                {/* Content */}
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
+                <h3 className="mb-2 text-lg font-semibold text-[#0F172A]">{feature.title}</h3>
+                <p className="text-sm leading-relaxed text-[#64748B]">{feature.description}</p>
+
+                {feature.title === 'Mentor Guidance' && (
+                  <div className="mt-4 rounded-xl bg-[#FEFCE8] px-3 py-2 text-xs font-medium text-[#854D0E]">
+                    Structured mentor sessions and progress-based feedback.
+                  </div>
+                )}
               </motion.div>
             )
           })}
         </motion.div>
+
+        <div className="mt-10 flex justify-center">
+          <div className="h-px w-40 bg-gradient-to-r from-transparent via-[#BFDBFE] to-transparent" />
+        </div>
+
+        <div id="track" className="sr-only" aria-hidden="true" />
       </div>
     </section>
   )

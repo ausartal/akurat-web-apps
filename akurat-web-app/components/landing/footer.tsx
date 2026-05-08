@@ -1,87 +1,62 @@
 'use client'
 
 import Link from 'next/link'
-import { Mail, Phone, MapPin, Github, Share2, Camera, Briefcase } from 'lucide-react'
+import Image from 'next/image'
+import { Mail, Phone, Globe, MessageCircle, Share2 } from 'lucide-react'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
-  const footerLinks = {
-    product: [
-      { label: 'Features', href: '#features' },
-      { label: 'Pricing', href: '#pricing' },
-      { label: 'Learning Materials', href: '#materials' },
-      { label: 'About', href: '#about' },
-    ],
-    company: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Contact', href: '/contact' },
-    ],
-    legal: [
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Terms of Service', href: '/terms' },
-      { label: 'Cookie Policy', href: '/cookies' },
-      { label: 'Disclaimer', href: '/disclaimer' },
-    ],
-  }
+  const navLinks = [
+    { label: 'Home', href: '#' },
+    { label: 'Features', href: '#features' },
+    { label: 'Pricing', href: '#pricing' },
+    { label: 'Contact Us', href: '#faq' },
+  ]
+
+  const legalLinks = [
+    { label: 'Terms of Service', href: '/terms' },
+    { label: 'Privacy Policy', href: '/privacy' },
+  ]
 
   const socialLinks = [
-    { icon: Heart, href: '#', label: 'Like' },
-    { icon: Share, href: '#', label: 'Share' },
-    { icon: MapPin, href: '#', label: 'Location' },
-    { icon: Mail, href: '#', label: 'Contact' },
+    { icon: Globe, href: '#', label: 'Website' },
+    { icon: MessageCircle, href: '#', label: 'Community' },
+    { icon: Share2, href: '#', label: 'Share' },
   ]
 
   return (
-    <footer className="bg-gray-900 text-gray-300 border-t border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-          <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
-              </div>
-              <span className="font-bold text-lg text-white">AKURAT</span>
+    <footer className="border-t border-[#E2E8F0] bg-white">
+      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
+          <div>
+            <Link href="/" className="inline-flex items-center" aria-label="AKURAT home">
+              <Image src="/akurat-logo.svg" alt="AKURAT" width={136} height={36} className="h-8 w-auto" />
             </Link>
-            <p className="text-sm text-gray-400 mb-4">
-              Master chemistry with adaptive learning and expert guidance.
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#64748B]">
+              Operating as a chemistry learning platform with a modern curriculum and adaptive learning flow.
             </p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-blue-600" />
-                <a
-                  href="mailto:hello@akurat.edu"
-                  className="text-sm hover:text-white transition-colors"
-                >
-                  hello@akurat.edu
-                </a>
+
+            <div className="mt-5 space-y-2 text-sm text-[#475569]">
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-[#4F46E5]" />
+                support@akurat.id
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-blue-600" />
-                <a
-                  href="tel:+91-XXX-XXX-XXXX"
-                  className="text-sm hover:text-white transition-colors"
-                >
-                  +91 XXXX XXXX
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <MapPin className="w-4 h-4 text-blue-600" />
-                <p className="text-sm">India</p>
+              <div className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-[#4F46E5]" />
+                +1 (703) 456-7780
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-1">
-            <h3 className="text-white font-semibold mb-4">Product</h3>
-            <ul className="space-y-3">
-              {footerLinks.product.map((link) => (
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#0F172A]">Navigation</h3>
+            <ul className="space-y-2.5">
+              {navLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm hover:text-white transition-colors"
+                    className="text-sm text-[#64748B] transition-colors hover:text-[#2563EB]"
                   >
                     {link.label}
                   </Link>
@@ -90,67 +65,49 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-1">
-            <h3 className="text-white font-semibold mb-4">Company</h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#0F172A]">Legal</h3>
+            <ul className="space-y-2.5">
+              {legalLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm hover:text-white transition-colors"
+                    className="text-sm text-[#64748B] transition-colors hover:text-[#2563EB]"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
 
-          <div className="lg:col-span-1">
-            <h3 className="text-white font-semibold mb-4">Legal</h3>
-            <ul className="space-y-3">
-              {footerLinks.legal.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="lg:col-span-1">
-            <h3 className="text-white font-semibold mb-4">Follow Us</h3>
-            <div className="flex gap-4">
+            <div className="mt-6">
+              <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#0F172A]">Social</h4>
+              <div className="flex gap-2.5">
               {socialLinks.map((social) => {
                 const Icon = social.icon
                 return (
                   <a
                     key={social.label}
                     href={social.href}
-                    className="w-10 h-10 rounded-lg bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors"
+                    className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E2E8F0] text-[#475569] transition-colors hover:border-[#C7D2FE] hover:text-[#4F46E5]"
                     aria-label={social.label}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="h-4 w-4" />
                   </a>
                 )
               })}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-gray-400">
-               {currentYear} AKURAT. All rights reserved.
-            </p>
-            <p className="text-sm text-gray-400">
-              Made with  for chemistry learners worldwide
-            </p>
-          </div>
+        <div className="mt-10 flex flex-col gap-3 border-t border-[#E2E8F0] pt-6 text-xs text-[#94A3B8] sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {currentYear} AKURAT. All rights reserved.
+          </p>
+          <p>
+            Built for better chemistry understanding.
+          </p>
         </div>
       </div>
     </footer>
