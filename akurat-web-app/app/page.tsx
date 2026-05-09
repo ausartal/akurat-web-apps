@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { Navbar } from '@/components/landing/navbar'
 import { HeroSection } from '@/components/landing/hero-section'
+import { HowItWorksSection, OlympiadSection } from '@/components/landing/how-it-works-section'
 import { FeaturesSection } from '@/components/landing/features-section'
 import { TargetUsersSection } from '@/components/landing/target-users-section'
 import { LearningMaterialsSection } from '@/components/landing/learning-materials-section'
@@ -11,19 +12,21 @@ import { FaqNewsletterSection } from '@/components/landing/faq-newsletter-sectio
 import { Footer } from '@/components/landing/footer'
 
 export const metadata: Metadata = {
-  title: 'AKURAT | Master Chemistry Easily & Effectively',
+  title: 'AKURAT | Measure Precisely, Learn Accurately',
   description:
-    'AKURAT helps students master chemistry with structured learning paths, interactive materials, and adaptive practice systems.',
+    'Lebih dari sekadar nilai. Diagnosis pemahaman kimia dan miskonsepsi secara presisi melalui platform adaptif terintegrasi.',
 }
 
 export default function LandingPage() {
   return (
-    <div className="bg-[#F8FAFC] text-[#0F172A]">
+    <div className="text-[#0F172A]">
       <Navbar />
       <HeroSection />
+      <HowItWorksSection />
       <FeaturesSection />
-      <TargetUsersSection />
       <LearningMaterialsSection />
+      <OlympiadSection />
+      <TargetUsersSection />
       <PricingSection />
       <TestimonialsSection />
       <FaqNewsletterSection />
