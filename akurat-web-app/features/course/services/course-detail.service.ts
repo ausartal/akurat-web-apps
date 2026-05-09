@@ -22,3 +22,4 @@ export async function getCourseBySlug(slug: string) {
 
   return data
 }
+

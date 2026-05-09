@@ -32,3 +32,4 @@ export default function Topbar({ title = 'Dashboard', subtitle }: TopbarProps) {
     </header>
   )
 }
+

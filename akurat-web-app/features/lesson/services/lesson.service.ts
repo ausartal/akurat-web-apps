@@ -131,3 +131,4 @@ export async function completeLesson(
     return { success: false, error: 'An unexpected error occurred' }
   }
 }
+

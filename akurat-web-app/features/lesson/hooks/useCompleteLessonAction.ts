@@ -43,3 +43,4 @@ export function useCompleteLessonAction() {
 
   return { completeLesson, isLoading, error }
 }
+
