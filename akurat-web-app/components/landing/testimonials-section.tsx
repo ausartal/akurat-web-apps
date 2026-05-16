@@ -1,118 +1,108 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Star } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { ArrowRight, Star } from 'lucide-react'
 
 const testimonials = [
   {
-    name: 'Ana',
-    role: 'Student',
+    name: 'Nadia',
+    role: 'Siswa SMA',
     content:
-      'Courses really helped me understand chemistry concepts easily. The learning videos were clear and the practice made me more confident.',
+      'Aku jadi tahu bagian mana yang sebenarnya belum paham. Bukan cuma dapat skor, tapi ada arah belajar setelah ujian.',
+    rating: 5,
+    avatar: 'N',
+  },
+  {
+    name: 'Pak Arif',
+    role: 'Guru Kimia',
+    content:
+      'Data miskonsepsi per topik membantu saya menentukan remedial. Kelas jadi lebih berbasis bukti, bukan tebak-tebakan.',
     rating: 5,
     avatar: 'A',
   },
   {
-    name: 'Asep',
-    role: 'Parent',
+    name: 'Citra',
+    role: 'Peserta Olimpiade',
     content:
-      'The olympiad chemistry class gives excellent structured lessons. My child improved significantly after joining AKURAT.',
-    rating: 5,
-    avatar: 'As',
-  },
-  {
-    name: 'Budi',
-    role: 'High School Student',
-    content:
-      'I was worried chemistry would be hard, but AKURAT made every lesson step-by-step and practical. It is now one of my best subjects.',
-    rating: 5,
-    avatar: 'B',
-  },
-  {
-    name: 'Cici',
-    role: 'University Student',
-    content:
-      'The mentoring community and chapter quizzes are excellent. I now feel better prepared for exams and chemistry projects.',
+      'Latihannya terasa bertahap. Ketika salah di pereaksi pembatas, rekomendasinya langsung mengarah ke konsep yang perlu diulang.',
     rating: 5,
     avatar: 'C',
+  },
+  {
+    name: 'Dr. Hana',
+    role: 'Peneliti Pendidikan',
+    content:
+      'Konsep MSAT dan profil miskonsepsi membuat platform ini potensial untuk pilot asesmen dan penelitian pembelajaran kimia.',
+    rating: 5,
+    avatar: 'H',
   },
 ]
 
 export function TestimonialsSection() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.6 },
-        },
-  }
-
   return (
-    <section id="testimonials" className="bg-[#1E1B7A] py-20">
+    <section id="testimonials" className="bg-white py-24">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid gap-7 lg:grid-cols-[0.95fr_1.05fr]"
-        >
-          <motion.div variants={itemVariants} className="space-y-5">
-            <h2 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl">
-              What do they say about
-              <span className="text-[#FACC15]"> AKURAT?</span>
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="space-y-5"
+          >
+            <span className="inline-block rounded-full bg-[#EAF3FF] px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#1A73E8]">
+              Social proof
+            </span>
+            <h2 className="text-3xl font-extrabold leading-tight text-[#0F172A] sm:text-4xl">
+              Belajar terasa ramah, hasilnya tetap presisi.
             </h2>
-            <p className="max-w-sm text-sm leading-relaxed text-[#C7D2FE] sm:text-base">
-              Don&apos;t hesitate to join. Learners and parents experience a different chemistry journey with AKURAT.
+            <p className="max-w-sm text-sm leading-relaxed text-[#64748B] sm:text-base">
+              Tone AKURAT dibuat tidak mengintimidasi siswa, tetapi tetap membawa standar asesmen
+              yang cocok untuk guru dan institusi.
             </p>
-            <Link href="/register">
-              <Button className="mt-2 rounded-xl bg-[#4F46E5] px-6 text-white hover:bg-[#4338CA]">Join Now</Button>
+            <Link
+              href="/register"
+              className="inline-flex items-center gap-2 rounded-2xl bg-[#1A73E8] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#1A73E8]/20 transition hover:-translate-y-0.5 hover:bg-[#155FC3]"
+            >
+              Gabung sekarang
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             {testimonials.map((testimonial, index) => (
               <motion.article
-                key={testimonial.name + index}
-                variants={itemVariants}
+                key={testimonial.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.06 }}
+                viewport={{ once: true }}
                 whileHover={{ y: -4 }}
-                className="rounded-2xl border border-white/15 bg-white p-5 shadow-lg"
+                className="rounded-[24px] border border-[#E2E8F0] bg-[#F8FAFB] p-5 transition-all hover:bg-white hover:shadow-[0_20px_54px_-42px_rgba(15,23,42,0.55)]"
               >
-                <div className="mb-2 flex items-center justify-between">
+                <div className="mb-3 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EEF2FF] text-xs font-bold text-[#4F46E5]">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1A73E8] text-xs font-bold text-white">
                       {testimonial.avatar}
                     </div>
-                    <p className="text-sm font-semibold text-[#0F172A]">{testimonial.name}</p>
+                    <div>
+                      <p className="text-sm font-bold text-[#0F172A]">{testimonial.name}</p>
+                      <p className="text-xs text-[#64748B]">{testimonial.role}</p>
+                    </div>
                   </div>
                   <div className="flex items-center gap-0.5">
-                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-[#FACC15] text-[#FACC15]" />
+                    {Array.from({ length: testimonial.rating }).map((_, starIndex) => (
+                      <Star key={starIndex} className="h-3.5 w-3.5 fill-[#FF9500] text-[#FF9500]" />
                     ))}
                   </div>
                 </div>
-                <p className="text-sm leading-relaxed text-[#334155]">“{testimonial.content}”</p>
-                <p className="mt-3 text-xs font-medium text-[#64748B]">{testimonial.role}</p>
+                <p className="text-sm leading-relaxed text-[#334155]">&quot;{testimonial.content}&quot;</p>
               </motion.article>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
 }
-

@@ -1,8 +1,11 @@
 import { createClient } from '@/lib/supabase/client'
+import type { Tables } from '@/src/types/database'
 
 const supabase = createClient()
 
-export async function getMyProfile() {
+export type Profile = Tables<'profiles'>
+
+export async function getMyProfile(): Promise<Profile | null> {
   const {
     data: { user },
   } = await supabase.auth.getUser()

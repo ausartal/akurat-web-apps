@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import type { Database, Tables } from '@/src/types/database'
+import type { Tables } from '@/src/types/database'
 
 const supabase = createClient()
 
@@ -124,6 +124,12 @@ export async function completeLesson(
       console.error('Error updating lesson progress:', progressError)
       return { success: false, error: 'Failed to mark lesson as completed' }
     }
+
+    await supabase.from('xp_transactions').insert({
+      user_id: userId,
+      amount: xpReward,
+      reason: `Completed lesson: ${lessonId}`,
+    })
 
     return { success: true }
   } catch (error) {

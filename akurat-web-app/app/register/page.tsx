@@ -4,33 +4,65 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Mail, Lock, User, GraduationCap, BookOpen, Eye, EyeOff } from 'lucide-react'
+import {
+  ArrowRight,
+  BookOpen,
+  Eye,
+  EyeOff,
+  GraduationCap,
+  Lock,
+  Mail,
+  Sparkles,
+  User,
+} from 'lucide-react'
 
 import { signUp } from '@/features/auth/services/auth.service'
 
 type Role = 'student' | 'teacher'
 
+const roleOptions: Array<{
+  value: Role
+  icon: typeof GraduationCap
+  title: string
+  description: string
+}> = [
+  {
+    value: 'student',
+    icon: GraduationCap,
+    title: 'Siswa',
+    description: 'Belajar materi, kerjakan quiz, ikuti ujian MSAT.',
+  },
+  {
+    value: 'teacher',
+    icon: BookOpen,
+    title: 'Guru / Mentor',
+    description: 'Buat materi, pantau progres, lihat analytics kelas.',
+  },
+]
+
 export default function RegisterPage() {
   const router = useRouter()
 
   const [role, setRole] = useState<Role>('student')
-  const [full_name, setFullName] = useState('')
+  const [fullName, setFullName] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  async function handleRegister(e: React.FormEvent) {
-    e.preventDefault()
+  async function handleRegister(event: React.FormEvent) {
+    event.preventDefault()
     setLoading(true)
+    setErrorMessage(null)
 
-    const { error } = await signUp({ full_name, email, password })
+    const { error } = await signUp({ full_name: fullName, email, password })
 
     setLoading(false)
 
     if (error) {
-      alert(error.message)
+      setErrorMessage(error.message)
       return
     }
 
@@ -38,219 +70,264 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#F3F4F6]">
-      {/* Left decorative panel */}
-      <div className="relative hidden w-[58%] overflow-hidden bg-[#F0F2F5] lg:flex items-center justify-center">
-        {/* Grid pattern */}
+    <div className="flex min-h-screen bg-white">
+      {/* Brand panel */}
+      <div className="relative hidden w-[50%] overflow-hidden lg:flex">
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,#0E4DAA_0%,#1A73E8_55%,#00C2FF_100%)]" />
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-[0.18]"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(203,213,225,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(203,213,225,0.5) 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
+              'linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)',
+            backgroundSize: '52px 52px',
+            maskImage: 'radial-gradient(circle at top right, rgba(0,0,0,1), rgba(0,0,0,0) 70%)',
           }}
         />
+        <div className="absolute -top-24 -left-20 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute -bottom-32 -right-10 h-96 w-96 rounded-full bg-[#FF9500]/35 blur-3xl" />
 
-        {/* Top-left cyan arc */}
-        <div className="absolute -left-16 top-8 h-40 w-40 rounded-full border-[20px] border-[#06B6D4] bg-transparent opacity-90" />
-
-        {/* Top-center purple blob */}
-        <div
-          className="absolute top-4 left-1/2 -translate-x-1/4 h-40 w-44 rounded-full bg-[#4F46E5] opacity-70"
-          style={{ filter: 'blur(32px)' }}
-        />
-
-        {/* Yellow crescent */}
-        <div
-          className="absolute right-12 top-32 h-20 w-20 rounded-full bg-[#FACC15]"
-          style={{ clipPath: 'polygon(60% 0%, 100% 0%, 100% 100%, 60% 100%, 20% 50%)' }}
-        />
-
-        {/* Orange star bottom-left */}
-        <div className="absolute bottom-16 left-8 text-[#F97316]">
-          <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
-            <path
-              d="M36 0L39.8 27.2L67 36L39.8 44.8L36 72L32.2 44.8L5 36L32.2 27.2L36 0Z"
-              fill="#F97316"
+        <div className="relative z-10 flex w-full flex-col justify-between p-12 text-white">
+          <Link href="/" aria-label="AKURAT home" className="inline-flex">
+            <Image
+              src="/akurat-logo.svg"
+              alt="AKURAT"
+              width={170}
+              height={42}
+              className="h-10 w-auto brightness-0 invert"
+              priority
             />
-          </svg>
-        </div>
+          </Link>
 
-        {/* Yellow half-circle bottom-right */}
-        <div
-          className="absolute bottom-8 right-8 h-28 w-28 rounded-full bg-[#FACC15]"
-          style={{ clipPath: 'ellipse(50% 100% at 100% 50%)' }}
-        />
+          <div className="max-w-md">
+            <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1 text-xs font-bold uppercase tracking-widest backdrop-blur">
+              <Sparkles className="h-3.5 w-3.5" />
+              Mulai gratis hari ini
+            </p>
+            <h2 className="text-balance text-4xl font-black leading-[1.1]">
+              Bergabunglah dengan ekosistem belajar kimia adaptif.
+            </h2>
+            <p className="mt-4 text-base leading-7 text-white/85">
+              Daftarkan diri sebagai siswa atau guru untuk mengakses materi stoikiometri,
+              quiz adaptif, dan laporan kompetensi yang siap ditindaklanjuti.
+            </p>
 
-        {/* Bottom-left cyan half */}
-        <div
-          className="absolute bottom-24 left-0 h-24 w-24 rounded-full bg-[#06B6D4]"
-          style={{ clipPath: 'ellipse(100% 50% at 0% 50%)' }}
-        />
+            <div className="mt-10 grid grid-cols-3 gap-3 text-center">
+              {[
+                { value: '4', label: 'Tahap MSAT' },
+                { value: '6+', label: 'Pola miskonsepsi' },
+                { value: '3', label: 'Mode pengguna' },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur"
+                >
+                  <p className="text-3xl font-black">{item.value}</p>
+                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-widest text-white/80">
+                    {item.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        {/* Center logo */}
-        <div className="relative z-10 flex flex-col items-center">
-          <Image
-            src="/akurat-logo.svg"
-            alt="AKURAT"
-            width={200}
-            height={56}
-            className="h-16 w-auto drop-shadow-lg"
-          />
+          <p className="text-xs text-white/70">
+            &copy; {new Date().getFullYear()} AKURAT. Built for precise chemistry understanding.
+          </p>
         </div>
       </div>
 
-      {/* Right form panel */}
-      <div className="flex flex-1 flex-col items-center justify-center bg-white px-6 py-10 sm:px-10 lg:px-14 overflow-y-auto">
-        {/* Mobile logo */}
-        <div className="mb-6 lg:hidden">
-          <Image src="/akurat-logo.svg" alt="AKURAT" width={140} height={36} className="h-9 w-auto" />
-        </div>
+      {/* Form panel */}
+      <div className="flex flex-1 items-center justify-center px-6 py-10 sm:px-10 lg:px-14">
+        <div className="w-full max-w-[460px]">
+          <div className="mb-8 lg:hidden">
+            <Image
+              src="/akurat-logo.svg"
+              alt="AKURAT"
+              width={140}
+              height={36}
+              className="h-9 w-auto"
+            />
+          </div>
 
-        <div className="w-full max-w-[420px]">
-          <h1 className="text-2xl font-bold text-[#0F172A]">Create Account</h1>
-          <p className="mt-1 text-sm text-[#64748B]">Choose your account type and start your journey with us</p>
+          <div className="mb-1 inline-flex items-center gap-2 rounded-full border border-[#D9EEF2] bg-[#F8FEFF] px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-[#1A73E8]">
+            Buat akun baru
+          </div>
+          <h1 className="text-3xl font-extrabold text-[#0F172A]">Daftar dalam 1 menit</h1>
+          <p className="mt-2 text-sm text-[#64748B]">
+            Pilih peranmu, lalu lengkapi data dasar untuk memulai.
+          </p>
 
           {/* Role selector */}
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setRole('student')}
-              className={`flex flex-col items-center gap-2 rounded-xl border-2 px-4 py-4 text-center transition-all ${
-                role === 'student'
-                  ? 'border-[#4F46E5] bg-[#EEF2FF] text-[#4F46E5]'
-                  : 'border-[#E2E8F0] bg-white text-[#64748B] hover:border-[#C7D2FE] hover:bg-[#F8FAFC]'
-              }`}
-            >
-              <GraduationCap className={`h-6 w-6 ${role === 'student' ? 'text-[#4F46E5]' : 'text-[#94A3B8]'}`} />
-              <span className="text-sm font-semibold">Student</span>
-              <span className="text-xs leading-tight text-[#94A3B8]">Take quizzes and track your progress</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setRole('teacher')}
-              className={`flex flex-col items-center gap-2 rounded-xl border-2 px-4 py-4 text-center transition-all ${
-                role === 'teacher'
-                  ? 'border-[#4F46E5] bg-[#EEF2FF] text-[#4F46E5]'
-                  : 'border-[#E2E8F0] bg-white text-[#64748B] hover:border-[#C7D2FE] hover:bg-[#F8FAFC]'
-              }`}
-            >
-              <BookOpen className={`h-6 w-6 ${role === 'teacher' ? 'text-[#4F46E5]' : 'text-[#94A3B8]'}`} />
-              <span className="text-sm font-semibold">Teacher</span>
-              <span className="text-xs leading-tight text-[#94A3B8]">Create quizzes and manage students</span>
-            </button>
-          </div>
-
-          {/* Social buttons */}
-          <div className="mt-5 grid grid-cols-2 gap-3">
-            <button className="flex items-center justify-center gap-2.5 rounded-xl border border-[#E2E8F0] bg-white px-4 py-2.5 text-sm font-medium text-[#374151] transition-colors hover:bg-[#F9FAFB] hover:border-[#CBD5E1]">
-              <svg className="h-4 w-4" viewBox="0 0 24 24">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-              </svg>
-              Google
-            </button>
-            <button className="flex items-center justify-center gap-2.5 rounded-xl border border-[#E2E8F0] bg-white px-4 py-2.5 text-sm font-medium text-[#374151] transition-colors hover:bg-[#F9FAFB] hover:border-[#CBD5E1]">
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="#1877F2">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-              Facebook
-            </button>
-          </div>
-
-          {/* OR divider */}
-          <div className="my-5 flex items-center gap-3">
-            <div className="h-px flex-1 bg-[#E2E8F0]" />
-            <span className="text-xs font-medium text-[#94A3B8]">OR</span>
-            <div className="h-px flex-1 bg-[#E2E8F0]" />
+            {roleOptions.map((option) => {
+              const Icon = option.icon
+              const active = role === option.value
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setRole(option.value)}
+                  className={`flex flex-col gap-2 rounded-2xl border-2 p-4 text-left transition-all ${
+                    active
+                      ? 'border-[#1A73E8] bg-[#F8FEFF] text-[#0F172A] shadow-[0_18px_36px_-26px_rgba(26,115,232,0.7)]'
+                      : 'border-[#E2E8F0] bg-white text-[#475569] hover:border-[#BFEFFF] hover:bg-[#F8FEFF]'
+                  }`}
+                  aria-pressed={active}
+                >
+                  <div
+                    className={`flex h-10 w-10 items-center justify-center rounded-xl ${
+                      active ? 'bg-[#1A73E8] text-white' : 'bg-[#EDF2F2] text-[#1A73E8]'
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-[#0F172A]">{option.title}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-[#64748B]">
+                      {option.description}
+                    </p>
+                  </div>
+                </button>
+              )
+            })}
           </div>
 
           {/* Form */}
-          <form onSubmit={handleRegister} className="space-y-4">
-            {/* Full Name + Username row */}
+          <form onSubmit={handleRegister} className="mt-6 space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-[#374151]">Full Name</label>
+                <label
+                  htmlFor="full_name"
+                  className="mb-1.5 block text-sm font-semibold text-[#1E293B]"
+                >
+                  Nama lengkap
+                </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+                  <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
                   <input
+                    id="full_name"
                     type="text"
-                    placeholder="John Doe"
-                    value={full_name}
-                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Nama lengkapmu"
+                    value={fullName}
+                    onChange={(event) => setFullName(event.target.value)}
                     required
-                    className="w-full rounded-xl border border-[#E2E8F0] bg-white py-2.5 pl-9 pr-3 text-sm text-[#0F172A] placeholder-[#94A3B8] outline-none transition-all focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/15"
+                    autoComplete="name"
+                    className="h-11 w-full rounded-xl border border-[#E2E8F0] bg-white pl-9 pr-3 text-sm text-[#0F172A] outline-none transition placeholder:text-[#94A3B8] focus:border-[#1A73E8] focus:ring-2 focus:ring-[#BFEFFF]"
                   />
                 </div>
               </div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-[#374151]">Username</label>
+                <label
+                  htmlFor="username"
+                  className="mb-1.5 block text-sm font-semibold text-[#1E293B]"
+                >
+                  Username
+                </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+                  <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
                   <input
+                    id="username"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="username"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full rounded-xl border border-[#E2E8F0] bg-white py-2.5 pl-9 pr-3 text-sm text-[#0F172A] placeholder-[#94A3B8] outline-none transition-all focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/15"
+                    onChange={(event) => setUsername(event.target.value)}
+                    autoComplete="username"
+                    className="h-11 w-full rounded-xl border border-[#E2E8F0] bg-white pl-9 pr-3 text-sm text-[#0F172A] outline-none transition placeholder:text-[#94A3B8] focus:border-[#1A73E8] focus:ring-2 focus:ring-[#BFEFFF]"
                   />
                 </div>
               </div>
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-[#374151]">Email</label>
+              <label htmlFor="email" className="mb-1.5 block text-sm font-semibold text-[#1E293B]">
+                Email
+              </label>
               <div className="relative">
-                <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+                <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
                 <input
+                  id="email"
                   type="email"
-                  placeholder="name@example.com"
+                  placeholder="email@sekolah.ac.id"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(event) => setEmail(event.target.value)}
                   required
-                  className="w-full rounded-xl border border-[#E2E8F0] bg-white py-2.5 pl-10 pr-4 text-sm text-[#0F172A] placeholder-[#94A3B8] outline-none transition-all focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/15"
+                  autoComplete="email"
+                  className="h-11 w-full rounded-xl border border-[#E2E8F0] bg-white pl-10 pr-4 text-sm text-[#0F172A] outline-none transition placeholder:text-[#94A3B8] focus:border-[#1A73E8] focus:ring-2 focus:ring-[#BFEFFF]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-[#374151]">Password</label>
+              <label
+                htmlFor="password"
+                className="mb-1.5 block text-sm font-semibold text-[#1E293B]"
+              >
+                Kata sandi
+              </label>
               <div className="relative">
-                <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+                <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
                 <input
+                  id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="••••••••••"
+                  placeholder="Minimal 8 karakter"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(event) => setPassword(event.target.value)}
                   required
-                  className="w-full rounded-xl border border-[#E2E8F0] bg-white py-2.5 pl-10 pr-10 text-sm text-[#0F172A] placeholder-[#94A3B8] outline-none transition-all focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/15"
+                  autoComplete="new-password"
+                  minLength={8}
+                  className="h-11 w-full rounded-xl border border-[#E2E8F0] bg-white pl-10 pr-11 text-sm text-[#0F172A] outline-none transition placeholder:text-[#94A3B8] focus:border-[#1A73E8] focus:ring-2 focus:ring-[#BFEFFF]"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#64748B] transition-colors"
+                  onClick={() => setShowPassword((current) => !current)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-[#94A3B8] transition hover:bg-[#F1F5F9] hover:text-[#1A73E8]"
+                  aria-label={showPassword ? 'Sembunyikan kata sandi' : 'Lihat kata sandi'}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
+              <p className="mt-1.5 text-xs text-[#94A3B8]">
+                Gunakan minimal 8 karakter dengan kombinasi huruf dan angka.
+              </p>
             </div>
+
+            {errorMessage && (
+              <div className="rounded-xl border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-sm text-[#B91C1C]">
+                {errorMessage}
+              </div>
+            )}
 
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 w-full rounded-xl bg-[#7C3AED] py-3 text-sm font-semibold text-white shadow-md shadow-[#7C3AED]/25 transition-all hover:bg-[#6D28D9] hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#1A73E8] text-sm font-bold text-white shadow-[0_18px_36px_-18px_rgba(26,115,232,0.95)] transition hover:-translate-y-0.5 hover:bg-[#155FC3] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
             >
-              {loading ? 'Creating account...' : 'Sign Up'}
+              {loading ? 'Membuat akun…' : 'Buat akun'}
+              {!loading && (
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              )}
             </button>
+
+            <p className="text-center text-[11px] leading-5 text-[#94A3B8]">
+              Dengan mendaftar, kamu menyetujui{' '}
+              <Link href="/terms" className="font-semibold text-[#1A73E8] hover:underline">
+                Ketentuan Layanan
+              </Link>{' '}
+              dan{' '}
+              <Link href="/privacy" className="font-semibold text-[#1A73E8] hover:underline">
+                Kebijakan Privasi
+              </Link>{' '}
+              kami.
+            </p>
           </form>
 
-          <p className="mt-5 text-center text-sm text-[#64748B]">
-            Already have an account?{' '}
-            <Link href="/login" className="font-semibold text-[#4F46E5] hover:text-[#4338CA] transition-colors">
-              Sign In
+          <p className="mt-6 text-center text-sm text-[#64748B]">
+            Sudah punya akun?{' '}
+            <Link
+              href="/login"
+              className="font-bold text-[#1A73E8] transition-colors hover:text-[#155FC3]"
+            >
+              Masuk di sini
             </Link>
           </p>
         </div>
@@ -258,4 +335,3 @@ export default function RegisterPage() {
     </div>
   )
 }
-

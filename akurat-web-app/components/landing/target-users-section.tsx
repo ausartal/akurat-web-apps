@@ -1,143 +1,94 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Trophy, GraduationCap, Medal, CheckCircle2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { ArrowRight, Building2, GraduationCap, ShieldCheck, UserRoundCheck } from 'lucide-react'
 
 const userTypes = [
   {
-    icon: CheckCircle2,
-    text: 'High school chemistry students',
+    icon: GraduationCap,
+    title: 'Siswa',
+    description:
+      'Belajar materi, latihan soal, mengikuti ujian coba, dan memahami area yang perlu diperbaiki.',
+    color: '#1A73E8',
   },
   {
-    icon: CheckCircle2,
-    text: 'Olympiad preparation',
+    icon: UserRoundCheck,
+    title: 'Guru dan mentor',
+    description:
+      'Mengunggah materi, membuat quiz, membaca analytics kelas, dan menindaklanjuti miskonsepsi.',
+    color: '#00A9D6',
   },
   {
-    icon: CheckCircle2,
-    text: 'University entrance preparation',
-  },
-  {
-    icon: CheckCircle2,
-    text: 'Chemistry competition training',
-  },
-  {
-    icon: CheckCircle2,
-    text: 'College chemistry support',
+    icon: ShieldCheck,
+    title: 'Admin dan asosiasi',
+    description:
+      'Mengatur akses eksklusif, approval konten, subscription, dan ekspor data riset secara terkontrol.',
+    color: '#FF9500',
   },
 ]
 
 export function TargetUsersSection() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
-
   return (
-    <section id="about" className="bg-white py-20">
+    <section id="about" className="bg-white py-24">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="relative hidden min-h-[410px] lg:block"
           >
-            <div className="absolute inset-y-4 left-2 right-14 rounded-[34px] bg-gradient-to-br from-[#FACC15] via-[#FDE68A] to-[#F8FAFC]" />
-            <div className="absolute bottom-0 left-0 right-24 top-16 rounded-[36px] bg-gradient-to-br from-[#4F46E5] to-[#2563EB] shadow-2xl shadow-[#2563EB]/35" />
-            <motion.div
-              animate={{ y: [-8, 8, -8] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute left-6 top-8 rounded-2xl border border-white/70 bg-white px-4 py-3 shadow-xl"
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#EDF2F2] px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#1A73E8]">
+              <Building2 className="h-3.5 w-3.5" />
+              Role based platform
+            </span>
+            <h2 className="text-3xl font-extrabold leading-tight text-[#0F172A] sm:text-4xl lg:text-5xl">
+              Dibangun untuk ekosistem belajar yang lengkap.
+            </h2>
+            <p className="mt-4 max-w-lg text-base leading-relaxed text-[#64748B]">
+              AKURAT tidak hanya cantik untuk siswa. Struktur role, analytics, dan akses admin
+              disiapkan untuk implementasi sekolah, asosiasi, dan pilot riset.
+            </p>
+            <Link
+              href="/register"
+              className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-[#1A73E8] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#1A73E8]/20 transition hover:-translate-y-0.5 hover:bg-[#155FC3]"
             >
-              <div className="flex items-center gap-2">
-                <Trophy className="h-4 w-4 text-[#F59E0B]" />
-                <p className="text-xs font-semibold text-[#0F172A]">Olympiad Ready</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [10, -10, 10] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute bottom-6 right-4 rounded-2xl border border-white/70 bg-white px-4 py-3 shadow-xl"
-            >
-              <div className="flex items-center gap-2">
-                <Medal className="h-4 w-4 text-[#4F46E5]" />
-                <p className="text-xs font-semibold text-[#0F172A]">Top Progress</p>
-              </div>
-            </motion.div>
-
-            <div className="absolute bottom-16 left-12 flex items-center gap-3 rounded-2xl border border-white/70 bg-white px-4 py-3 shadow-xl">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EEF2FF]">
-                <GraduationCap className="h-4 w-4 text-[#4F46E5]" />
-              </div>
-              <div>
-                <p className="text-sm font-bold text-[#0F172A]">98+</p>
-                <p className="text-[11px] text-[#64748B]">Online Students</p>
-              </div>
-            </div>
+              Coba sebagai pengguna
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </motion.div>
 
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-7"
-          >
-            <div className="space-y-3">
-              <h2 className="text-3xl font-extrabold leading-tight text-[#0F172A] sm:text-4xl">
-                Who is <span className="text-[#4F46E5]">AKURAT</span> for?
-              </h2>
-              <p className="max-w-lg text-base text-[#64748B]">
-                AKURAT is designed to help learners master chemistry with practical, exam-focused,
-                and concept-first learning experiences.
-              </p>
-            </div>
-
-            <motion.div variants={containerVariants} className="space-y-3.5">
-              {userTypes.map((user, index) => {
-                const Icon = user.icon
-
-                return (
-                  <motion.div
-                    key={index}
-                    variants={{
-                      hidden: { opacity: 0, y: 10 },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: { duration: 0.45 },
-                      },
-                    }}
-                    className="flex items-center gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3"
-                  >
-                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FACC15]">
-                      <Icon className="h-4 w-4 text-[#0F172A]" />
+          <div className="grid gap-4">
+            {userTypes.map((user, index) => {
+              const Icon = user.icon
+              return (
+                <motion.article
+                  key={user.title}
+                  initial={{ opacity: 0, x: 24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
+                  viewport={{ once: true }}
+                  className="rounded-[28px] border border-[#E2E8F0] bg-[#F8FAFB] p-5 transition-all hover:bg-white hover:shadow-[0_24px_60px_-44px_rgba(15,23,42,0.55)]"
+                >
+                  <div className="flex gap-4">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white shadow-sm"
+                      style={{ color: user.color }}
+                    >
+                      <Icon className="h-6 w-6" />
                     </div>
-                    <p className="text-sm font-medium text-[#334155] sm:text-base">{user.text}</p>
-                  </motion.div>
-                )
-              })}
-            </motion.div>
-
-            <div>
-              <Link href="/register">
-                <Button className="rounded-xl bg-[#4F46E5] px-6 text-white hover:bg-[#4338CA]">Join Now</Button>
-              </Link>
-            </div>
-          </motion.div>
+                    <div>
+                      <h3 className="text-lg font-extrabold text-[#0F172A]">{user.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-[#64748B]">{user.description}</p>
+                    </div>
+                  </div>
+                </motion.article>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>
   )
 }
-

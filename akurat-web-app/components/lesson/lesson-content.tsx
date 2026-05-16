@@ -1,4 +1,5 @@
 import { Lesson } from '@/features/lesson/services/lesson.service'
+import type { Json } from '@/src/types/database'
 
 interface LessonContentProps {
   lesson: Lesson
@@ -24,12 +25,13 @@ export function LessonContent({
   }
 
   // Safely extract video_url from metadata
+  const metadata = lesson.metadata as Record<string, Json | undefined> | null
   const videoUrl =
     lesson.metadata &&
     typeof lesson.metadata === 'object' &&
     !Array.isArray(lesson.metadata) &&
     'video_url' in lesson.metadata
-      ? (lesson.metadata as Record<string, any>).video_url
+      ? metadata?.video_url
       : null
 
   return (

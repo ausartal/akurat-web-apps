@@ -3,23 +3,23 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X } from 'lucide-react'
+import { ArrowRight, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   const navItems = [
-    { label: 'Home', href: '#' },
-    { label: 'Learning Material', href: '#materials' },
-    { label: 'Learning Resources', href: '#features' },
-    { label: 'Assessment', href: '#pricing' },
+    { label: 'Beranda', href: '#hero' },
+    { label: 'Cara Kerja', href: '#how-it-works' },
+    { label: 'Fitur', href: '#features' },
+    { label: 'Materi', href: '#materials' },
+    { label: 'Paket', href: '#pricing' },
   ]
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-[#E2E8F0]/60 bg-white/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-18 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" style={{ height: '72px' }}>
-        {/* Logo */}
+    <nav className="sticky top-0 z-50 border-b border-[#D9EEF2]/80 bg-white/88 backdrop-blur-xl">
+      <div className="mx-auto flex h-[76px] w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2.5" aria-label="AKURAT home">
           <Image
             src="/akurat-logo.svg"
@@ -31,73 +31,70 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-1 rounded-full border border-[#D9EEF2] bg-[#F8FAFB] p-1 lg:flex">
           {navItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="text-sm font-medium text-[#475569] transition-colors hover:text-[#4F46E5]"
+              className="rounded-full px-4 py-2 text-sm font-bold text-[#475569] transition-colors hover:bg-white hover:text-[#1A73E8]"
             >
               {item.label}
             </Link>
           ))}
         </div>
 
-        {/* Desktop Actions */}
         <div className="hidden items-center gap-3 md:flex">
           <Link href="/login">
             <Button
               variant="outline"
               size="sm"
-              className="h-10 rounded-xl border-[#CBD5E1] px-5 text-[#0F172A] hover:bg-[#F1F5F9] hover:border-[#4F46E5] hover:text-[#4F46E5] transition-all"
+              className="h-11 rounded-xl border-[#D9EEF2] px-5 font-bold text-[#0F172A] transition-all hover:border-[#00C2FF] hover:bg-[#F8FEFF] hover:text-[#1A73E8]"
             >
-              Sign In
+              Masuk
             </Button>
           </Link>
           <Link href="/register">
             <Button
               size="sm"
-              className="h-10 rounded-xl bg-[#4F46E5] px-5 text-white shadow-md shadow-[#4F46E5]/20 hover:bg-[#4338CA] transition-all"
+              className="h-11 rounded-xl bg-[#1A73E8] px-5 font-bold text-white shadow-md shadow-[#1A73E8]/20 transition-all hover:bg-[#155FC3]"
             >
-              Get Started
+              Daftar
+              <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
         </div>
 
-        {/* Mobile hamburger */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="rounded-xl border border-[#E2E8F0] p-2.5 text-[#0F172A] md:hidden hover:bg-[#F8FAFC] transition-colors"
+          className="rounded-xl border border-[#D9EEF2] p-2.5 text-[#0F172A] transition-colors hover:bg-[#F8FEFF] md:hidden"
           aria-label="Toggle menu"
         >
           {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {isOpen && (
-          <div className="mb-3 space-y-1 rounded-2xl border border-[#E2E8F0] bg-white p-4 shadow-xl md:hidden">
+          <div className="mb-3 space-y-1 rounded-2xl border border-[#D9EEF2] bg-white p-4 shadow-xl md:hidden">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#475569] transition-colors hover:bg-[#EEF2FF] hover:text-[#4F46E5]"
+                className="block rounded-xl px-4 py-2.5 text-sm font-bold text-[#475569] transition-colors hover:bg-[#F8FEFF] hover:text-[#1A73E8]"
                 onClick={() => setIsOpen(false)}
               >
                 {item.label}
               </Link>
             ))}
-            <div className="flex gap-2.5 pt-3 border-t border-[#F1F5F9]">
+            <div className="flex gap-2.5 border-t border-[#EDF2F2] pt-3">
               <Link href="/login" className="flex-1">
-                <Button variant="outline" size="sm" className="w-full rounded-xl border-[#CBD5E1]">
-                  Sign In
+                <Button variant="outline" size="sm" className="h-10 w-full rounded-xl border-[#D9EEF2] font-bold">
+                  Masuk
                 </Button>
               </Link>
               <Link href="/register" className="flex-1">
-                <Button size="sm" className="w-full rounded-xl bg-[#4F46E5] text-white hover:bg-[#4338CA]">
-                  Get Started
+                <Button size="sm" className="h-10 w-full rounded-xl bg-[#1A73E8] font-bold text-white hover:bg-[#155FC3]">
+                  Daftar
                 </Button>
               </Link>
             </div>

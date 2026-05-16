@@ -89,7 +89,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
         <div className="lg:col-span-1">
           <LessonSidebar
             lesson={lesson}
-            module={lesson.module as any}
+            module={lesson.module ?? null}
             isCompleted={isCompleted}
             userId={user.id}
           />

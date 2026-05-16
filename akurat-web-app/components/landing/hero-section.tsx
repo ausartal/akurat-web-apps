@@ -1,414 +1,330 @@
 'use client'
 
-import { useRef } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
-  Zap,
-  Users,
-  TrendingUp,
-  Star,
-  BookOpen,
-  CheckCircle,
-  ChevronRight,
+  ArrowRight,
+  BadgeCheck,
+  BarChart3,
+  BookOpenCheck,
+  BrainCircuit,
+  Calculator,
+  FlaskConical,
+  Gauge,
+  LockKeyhole,
+  MessageSquareText,
   Play,
+  Sparkles,
+  Target,
+  Timer,
 } from 'lucide-react'
-import { FloatingElement, FadeIn, MagneticButton } from '@/components/animations/motion'
 
-// ─── Floating glass card ──────────────────────────────────────────────────────
+interface MetricItem {
+  label: string
+  value: string
+  helper: string
+}
 
-function GlassCard({
-  children,
-  className = '',
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
+interface PathNode {
+  label: string
+  state: 'done' | 'active' | 'next'
+}
+
+const metrics: MetricItem[] = [
+  { label: 'MSAT stages', value: '4', helper: 'Router sampai confidence' },
+  { label: 'Deteksi miskonsepsi', value: '6+', helper: 'Pola stoikiometri utama' },
+  { label: 'Mode akses', value: '3', helper: 'Siswa, guru, admin' },
+]
+
+const pathNodes: PathNode[] = [
+  { label: 'Mol', state: 'done' },
+  { label: 'Rasio reaksi', state: 'done' },
+  { label: 'Pereaksi pembatas', state: 'active' },
+  { label: 'Gas STP', state: 'next' },
+]
+
+function LearningConstellation() {
   return (
-    <div
-      className={`rounded-2xl border border-white/60 bg-white/80 p-4 shadow-xl backdrop-blur-sm ${className}`}
-    >
-      {children}
+    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+      <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.92)_0%,rgba(237,242,242,0.86)_46%,rgba(220,244,255,0.74)_100%)]" />
+      <div className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0))]" />
+      <div
+        className="absolute inset-0 opacity-[0.16]"
+        style={{
+          backgroundImage:
+            'linear-gradient(#1A73E8 1px, transparent 1px), linear-gradient(90deg, #1A73E8 1px, transparent 1px)',
+          backgroundSize: '56px 56px',
+        }}
+      />
+
+      <motion.div
+        className="absolute left-[6%] top-[22%] hidden h-28 w-28 rounded-[30px] border border-[#BFEFFF] bg-white/70 p-4 shadow-[0_24px_70px_-42px_rgba(26,115,232,0.65)] backdrop-blur md:block"
+        animate={{ y: [-8, 8, -8], rotate: [-2, 2, -2] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <FlaskConical className="h-7 w-7 text-[#1A73E8]" />
+        <div className="mt-4 h-2 w-16 rounded-full bg-[#00C2FF]" />
+        <div className="mt-2 h-2 w-10 rounded-full bg-[#FF9500]" />
+      </motion.div>
+
+      <motion.div
+        className="absolute right-[8%] top-[18%] hidden rounded-[28px] border border-[#FFE1AE] bg-white/75 p-4 shadow-[0_24px_70px_-42px_rgba(255,149,0,0.65)] backdrop-blur lg:block"
+        animate={{ y: [10, -10, 10], rotate: [2, -2, 2] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#FFF1D6]">
+            <Target className="h-5 w-5 text-[#FF9500]" />
+          </div>
+          <div>
+            <div className="h-2 w-24 rounded-full bg-[#0F172A]" />
+            <div className="mt-2 h-2 w-16 rounded-full bg-[#94A3B8]" />
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-[15%] left-[9%] hidden rounded-[28px] border border-[#C8F5FF] bg-white/75 p-4 shadow-[0_24px_70px_-42px_rgba(0,194,255,0.65)] backdrop-blur xl:block"
+        animate={{ y: [-6, 12, -6] }}
+        transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <div className="flex items-center gap-3">
+          <Calculator className="h-5 w-5 text-[#00A9D6]" />
+          <span className="text-xs font-bold text-[#0F172A]">22.4 L/mol</span>
+        </div>
+      </motion.div>
+
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(0deg,#FFFFFF_0%,rgba(255,255,255,0)_100%)]" />
     </div>
   )
 }
 
-// ─── Dashboard Preview (right panel) ─────────────────────────────────────────
-
-function DashboardPreview() {
-  const topics = [
-    { name: 'Konsep Mol', pct: 100, color: '#4F46E5' },
-    { name: 'Massa Molar', pct: 85, color: '#4F46E5' },
-    { name: 'Stoikiometri', pct: 60, color: '#FACC15' },
-    { name: 'Reagent Pembatas', pct: 35, color: '#F97316' },
-  ]
-
+function ProductPreview() {
   return (
-    <div className="relative h-full w-full">
-      {/* Main dashboard mockup card */}
-      <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 mx-auto w-full max-w-sm overflow-hidden rounded-3xl border border-[#E2E8F0] bg-white shadow-2xl"
-      >
-        {/* Top bar */}
-        <div className="bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] px-5 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs text-blue-200">Selamat belajar 👋</p>
-              <p className="text-sm font-bold text-white">Ahmad Rizky</p>
-            </div>
-            <div className="flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white">
-              <Zap className="h-3.5 w-3.5 text-[#FACC15]" />
-              1,240 XP
-            </div>
-          </div>
-          {/* XP progress bar */}
-          <div className="mt-3">
-            <div className="mb-1 flex justify-between text-[10px] text-blue-200">
-              <span>Level 7</span>
-              <span>Level 8</span>
-            </div>
-            <div className="h-1.5 overflow-hidden rounded-full bg-white/30">
-              <motion.div
-                className="h-full rounded-full bg-[#FACC15]"
-                initial={{ width: 0 }}
-                animate={{ width: '72%' }}
-                transition={{ delay: 1.2, duration: 1, ease: 'easeOut' }}
-              />
-            </div>
-          </div>
+    <motion.div
+      initial={{ opacity: 0, y: 32, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+      className="mx-auto mt-12 w-full max-w-5xl overflow-hidden rounded-[30px] border border-white/80 bg-white/88 text-left shadow-[0_34px_110px_-60px_rgba(15,23,42,0.55)] backdrop-blur-xl"
+    >
+      <div className="flex items-center justify-between border-b border-[#E2E8F0] px-4 py-3 sm:px-5">
+        <div className="flex items-center gap-2">
+          <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
+          <span className="h-3 w-3 rounded-full bg-[#FFBD2E]" />
+          <span className="h-3 w-3 rounded-full bg-[#28C840]" />
         </div>
+        <div className="hidden items-center gap-2 rounded-full border border-[#D9EEF2] bg-[#EDF2F2] px-3 py-1 text-xs font-semibold text-[#475569] sm:flex">
+          <LockKeyhole className="h-3.5 w-3.5 text-[#1A73E8]" />
+          Secure adaptive exam
+        </div>
+      </div>
 
-        {/* Body */}
-        <div className="p-4 space-y-4">
-          {/* Stats row */}
-          <div className="grid grid-cols-3 gap-2">
-            {[
-              { label: 'Materi', value: '8/15' },
-              { label: 'Quiz', value: '12' },
-              { label: 'Streak', value: '3🔥' },
-            ].map((stat) => (
-              <div key={stat.label} className="rounded-xl bg-[#F8FAFC] p-2.5 text-center">
-                <p className="text-base font-extrabold text-[#0F172A]">{stat.value}</p>
-                <p className="text-[10px] text-[#94A3B8]">{stat.label}</p>
-              </div>
-            ))}
+      <div className="grid gap-0 lg:grid-cols-[0.82fr_1.18fr]">
+        <aside className="border-b border-[#E2E8F0] bg-[#F8FAFB] p-5 lg:border-b-0 lg:border-r">
+          <div className="mb-6 flex items-center gap-3">
+            <Image
+              src="/akurat-logo.svg"
+              alt="AKURAT"
+              width={118}
+              height={30}
+              className="h-8 w-auto"
+            />
           </div>
 
-          {/* Progress bars */}
-          <div>
-            <p className="mb-3 text-xs font-bold text-[#0F172A]">Progres Stoikiometri</p>
-            <div className="space-y-2.5">
-              {topics.map((t) => (
-                <div key={t.name}>
-                  <div className="mb-1 flex justify-between text-[10px]">
-                    <span className="text-[#374151]">{t.name}</span>
-                    <span className="font-semibold text-[#64748B]">{t.pct}%</span>
-                  </div>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-[#F1F5F9]">
-                    <motion.div
-                      className="h-full rounded-full"
-                      style={{ backgroundColor: t.color }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${t.pct}%` }}
-                      transition={{ delay: 1.4, duration: 0.8, ease: 'easeOut' }}
-                    />
-                  </div>
+          <div className="space-y-3">
+            {[
+              { icon: BookOpenCheck, label: 'Materi Stoikiometri', active: false },
+              { icon: BrainCircuit, label: 'MSAT Adaptif', active: true },
+              { icon: BarChart3, label: 'Laporan Kompetensi', active: false },
+              { icon: MessageSquareText, label: 'Ruang Mentor', active: false },
+            ].map((item) => {
+              const Icon = item.icon
+              return (
+                <div
+                  key={item.label}
+                  className={`flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-semibold ${
+                    item.active
+                      ? 'bg-[#1A73E8] text-white shadow-lg shadow-[#1A73E8]/20'
+                      : 'bg-white text-[#475569]'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.label}
+                </div>
+              )
+            })}
+          </div>
+        </aside>
+
+        <div className="p-5 sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#1A73E8]">
+                Adaptive session
+              </p>
+              <h3 className="mt-2 text-xl font-extrabold text-[#0F172A] sm:text-2xl">
+                Ujian Stoikiometri: Router Stage
+              </h3>
+              <p className="mt-1 max-w-xl text-sm leading-relaxed text-[#64748B]">
+                Sistem menilai jawaban, keyakinan, dan parameter IRT untuk memilih modul berikutnya.
+              </p>
+            </div>
+            <div className="inline-flex w-fit items-center gap-2 rounded-2xl bg-[#FFF3DF] px-3 py-2 text-sm font-bold text-[#B86200]">
+              <Timer className="h-4 w-4" />
+              18:42
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-[26px] border border-[#D9EEF2] bg-[#F8FEFF] p-4 sm:p-5">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-bold text-[#0F172A]">Jalur belajar saat ini</p>
+                <p className="text-xs text-[#64748B]">Berdasarkan 12 respons terakhir</p>
+              </div>
+              <div className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-bold text-[#00A9D6]">
+                <Sparkles className="h-3.5 w-3.5" />
+                Live
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-3 sm:grid-cols-4">
+              {pathNodes.map((node) => (
+                <div
+                  key={node.label}
+                  className={`relative rounded-2xl border p-3 ${
+                    node.state === 'done'
+                      ? 'border-[#BDEDD0] bg-[#F0FFF6]'
+                      : node.state === 'active'
+                        ? 'border-[#9FE8FF] bg-white shadow-lg shadow-[#00C2FF]/10'
+                        : 'border-[#E2E8F0] bg-white'
+                  }`}
+                >
+                  <div
+                    className={`mb-4 h-2 rounded-full ${
+                      node.state === 'done'
+                        ? 'bg-[#00B84D]'
+                        : node.state === 'active'
+                          ? 'bg-[#00C2FF]'
+                          : 'bg-[#CBD5E1]'
+                    }`}
+                  />
+                  <p className="text-xs font-bold text-[#0F172A]">{node.label}</p>
+                  <p className="mt-1 text-[11px] text-[#64748B]">
+                    {node.state === 'done'
+                      ? 'Kuat'
+                      : node.state === 'active'
+                        ? 'Diuji'
+                        : 'Berikutnya'}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
+
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {[
+              { label: 'Estimasi theta', value: '0.42', icon: Gauge },
+              { label: 'Standard error', value: '0.18', icon: Target },
+              { label: 'Confidence', value: 'Yakin', icon: BadgeCheck },
+            ].map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.label} className="rounded-2xl border border-[#E2E8F0] bg-white p-4">
+                  <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-[#EDF2F2]">
+                    <Icon className="h-4 w-4 text-[#1A73E8]" />
+                  </div>
+                  <p className="text-xs text-[#64748B]">{item.label}</p>
+                  <p className="mt-1 text-xl font-extrabold text-[#0F172A]">{item.value}</p>
+                </div>
+              )
+            })}
+          </div>
         </div>
-      </motion.div>
-
-      {/* Floating badge: Active learners */}
-      <FloatingElement
-        className="absolute -left-8 top-12 z-20 hidden sm:block"
-        amplitude={8}
-        duration={3.5}
-        delay={0}
-      >
-        <GlassCard className="min-w-[160px]">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#DCFCE7]">
-              <Users className="h-4 w-4 text-[#22C55E]" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-[#0F172A]">2,847 Aktif</p>
-              <p className="text-[10px] text-[#94A3B8]">Belajar sekarang</p>
-            </div>
-          </div>
-          <div className="mt-2 flex gap-0.5">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="h-1.5 w-1.5 rounded-full bg-[#22C55E]"
-                animate={{ opacity: [0.4, 1, 0.4] }}
-                transition={{ duration: 1.5, delay: i * 0.2, repeat: Infinity }}
-              />
-            ))}
-          </div>
-        </GlassCard>
-      </FloatingElement>
-
-      {/* Floating badge: XP earned */}
-      <FloatingElement
-        className="absolute -right-8 top-32 z-20 hidden sm:block"
-        amplitude={10}
-        duration={4}
-        delay={0.5}
-      >
-        <GlassCard className="min-w-[140px]">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FEFCE8]">
-              <Zap className="h-4 w-4 text-[#FACC15]" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-[#0F172A]">+50 XP</p>
-              <p className="text-[10px] text-[#94A3B8]">Quiz selesai!</p>
-            </div>
-          </div>
-        </GlassCard>
-      </FloatingElement>
-
-      {/* Floating badge: Accuracy */}
-      <FloatingElement
-        className="absolute -left-4 bottom-8 z-20 hidden sm:block"
-        amplitude={9}
-        duration={3.8}
-        delay={1}
-      >
-        <GlassCard className="min-w-[150px]">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EEF2FF]">
-              <TrendingUp className="h-4 w-4 text-[#4F46E5]" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-[#0F172A]">92% Akurasi</p>
-              <p className="text-[10px] text-[#94A3B8]">Minggu ini</p>
-            </div>
-          </div>
-        </GlassCard>
-      </FloatingElement>
-    </div>
+      </div>
+    </motion.div>
   )
 }
 
-// ─── Main Hero ────────────────────────────────────────────────────────────────
-
 export function HeroSection() {
-  const ref = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  })
-  const yBg = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
-
-  const trustItems = [
-    { icon: Users, text: '12,000+ Pelajar' },
-    { icon: Star, text: '4.9/5 Rating' },
-    { icon: BookOpen, text: '200+ Materi' },
-  ]
-
-  const features = [
-    'Pembelajaran Adaptif',
-    'Deteksi Miskonsepsi',
-    'Quiz Interaktif',
-    'Progress Tracking',
-  ]
-
   return (
-    <section
-      ref={ref}
-      id="hero"
-      className="relative min-h-screen overflow-hidden bg-[#F6F7FE] pt-20"
-    >
-      {/* Animated background gradient */}
-      <motion.div
-        style={{ y: yBg }}
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        {/* Large background orbs */}
-        <div className="absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#4F46E5]/15 to-[#7C3AED]/10 blur-3xl" />
-        <div className="absolute -right-32 top-20 h-[500px] w-[500px] rounded-full bg-gradient-to-bl from-[#06B6D4]/10 to-[#4F46E5]/8 blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-gradient-to-t from-[#FACC15]/8 to-transparent blur-3xl" />
+    <section id="hero" className="relative overflow-hidden bg-white pt-20">
+      <LearningConstellation />
 
-        {/* Animated grid */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              'linear-gradient(#4F46E5 1px, transparent 1px), linear-gradient(90deg, #4F46E5 1px, transparent 1px)',
-            backgroundSize: '48px 48px',
-          }}
-        />
-
-        {/* Floating molecules / atoms */}
-        <FloatingElement
-          className="absolute left-[8%] top-[20%]"
-          amplitude={15}
-          duration={5}
-          delay={0}
-        >
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" opacity="0.15">
-            <circle cx="24" cy="24" r="8" fill="#4F46E5" />
-            <circle cx="24" cy="8" r="4" fill="#4F46E5" />
-            <circle cx="24" cy="40" r="4" fill="#4F46E5" />
-            <circle cx="8" cy="24" r="4" fill="#4F46E5" />
-            <circle cx="40" cy="24" r="4" fill="#4F46E5" />
-            <line x1="24" y1="12" x2="24" y2="16" stroke="#4F46E5" strokeWidth="2" />
-            <line x1="24" y1="32" x2="24" y2="36" stroke="#4F46E5" strokeWidth="2" />
-            <line x1="12" y1="24" x2="16" y2="24" stroke="#4F46E5" strokeWidth="2" />
-            <line x1="32" y1="24" x2="36" y2="24" stroke="#4F46E5" strokeWidth="2" />
-          </svg>
-        </FloatingElement>
-        <FloatingElement
-          className="absolute right-[5%] top-[30%]"
-          amplitude={12}
-          duration={4.5}
-          delay={1.5}
-        >
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" opacity="0.12">
-            <circle cx="20" cy="20" r="12" stroke="#FACC15" strokeWidth="3" fill="none" />
-            <circle cx="20" cy="20" r="4" fill="#FACC15" />
-          </svg>
-        </FloatingElement>
-        <FloatingElement
-          className="absolute left-[15%] bottom-[25%]"
-          amplitude={18}
-          duration={6}
-          delay={0.8}
-        >
-          <svg width="32" height="56" viewBox="0 0 32 56" fill="none" opacity="0.1">
-            <circle cx="16" cy="8" r="6" fill="#06B6D4" />
-            <line x1="16" y1="14" x2="16" y2="42" stroke="#06B6D4" strokeWidth="2" />
-            <circle cx="16" cy="48" r="6" fill="#F97316" />
-          </svg>
-        </FloatingElement>
-      </motion.div>
-
-      {/* Content */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex min-h-[calc(100vh-80px)] flex-col items-center gap-12 pt-12 lg:flex-row lg:items-center lg:gap-16 lg:pt-16">
-          {/* ── LEFT: Text ── */}
-          <div className="flex-1 text-center lg:text-left">
-            {/* Badge */}
-            <FadeIn direction="down" delay={0}>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#C7D2FE] bg-white/80 px-4 py-2 text-sm font-semibold text-[#4F46E5] shadow-sm backdrop-blur-sm">
-                <span className="flex h-2 w-2 rounded-full bg-[#22C55E]">
-                  <motion.span
-                    className="block h-2 w-2 rounded-full bg-[#22C55E]"
-                    animate={{ scale: [1, 1.8, 1], opacity: [1, 0, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                </span>
-                Platform Kimia Adaptif #1 Indonesia
-              </div>
-            </FadeIn>
-
-            {/* Headline */}
-            <FadeIn direction="up" delay={0.1}>
-              <h1 className="text-5xl font-extrabold leading-[1.1] tracking-tight text-[#0F172A] sm:text-6xl lg:text-7xl">
-                <span className="block">MEASURE</span>
-                <span className="block bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] bg-clip-text text-transparent">
-                  PRECISELY
-                </span>
-                <span className="block">LEARN</span>
-                <span className="block text-[#FACC15] drop-shadow-sm">ACCURATELY</span>
-              </h1>
-            </FadeIn>
-
-            {/* Sub */}
-            <FadeIn direction="up" delay={0.25}>
-              <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-[#475569] lg:mx-0">
-                Lebih dari sekadar nilai. Diagnosis pemahaman kimia dan deteksi miskonsepsi
-                secara presisi melalui platform adaptif terintegrasi.
-              </p>
-            </FadeIn>
-
-            {/* Feature pills */}
-            <FadeIn direction="up" delay={0.35}>
-              <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
-                {features.map((f) => (
-                  <div
-                    key={f}
-                    className="flex items-center gap-1.5 rounded-full border border-[#E0E7FF] bg-white/60 px-3 py-1.5 text-xs font-medium text-[#4F46E5] backdrop-blur-sm"
-                  >
-                    <CheckCircle className="h-3.5 w-3.5" />
-                    {f}
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
-
-            {/* CTA buttons */}
-            <FadeIn direction="up" delay={0.45}>
-              <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
-                <MagneticButton strength={0.25}>
-                  <Link
-                    href="/register"
-                    className="group flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] px-7 py-4 text-base font-bold text-white shadow-xl shadow-[#4F46E5]/30 transition-all hover:shadow-[#4F46E5]/50 hover:-translate-y-0.5"
-                  >
-                    Mulai Belajar
-                    <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </MagneticButton>
-                <Link
-                  href="/dashboard/courses"
-                  className="flex items-center gap-2 rounded-2xl border-2 border-[#E0E7FF] bg-white/80 px-7 py-4 text-base font-bold text-[#4F46E5] backdrop-blur-sm transition-all hover:border-[#4F46E5] hover:bg-white"
-                >
-                  <Play className="h-4 w-4" />
-                  Lihat Kursus
-                </Link>
-              </div>
-            </FadeIn>
-
-            {/* Trust indicators */}
-            <FadeIn direction="up" delay={0.55}>
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-6 lg:justify-start">
-                {trustItems.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <div key={item.text} className="flex items-center gap-2 text-sm">
-                      <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EEF2FF]">
-                        <Icon className="h-3.5 w-3.5 text-[#4F46E5]" />
-                      </div>
-                      <span className="font-medium text-[#374151]">{item.text}</span>
-                    </div>
-                  )
-                })}
-              </div>
-            </FadeIn>
-          </div>
-
-          {/* ── RIGHT: Dashboard preview ── */}
-          <FadeIn
-            direction="left"
-            delay={0.3}
-            className="relative w-full max-w-md flex-1 lg:max-w-none"
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] w-full max-w-7xl flex-col justify-center px-4 pb-12 pt-12 sm:px-6 lg:px-8 lg:pb-16">
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55 }}
+            className="inline-flex items-center gap-2 rounded-full border border-[#BFEFFF] bg-white/80 px-4 py-2 text-sm font-bold text-[#1A73E8] shadow-sm backdrop-blur"
           >
-            <div className="relative h-[520px] lg:h-[580px]">
-              <DashboardPreview />
-            </div>
-          </FadeIn>
+            <span className="flex h-2.5 w-2.5 rounded-full bg-[#00B84D]" />
+            Platform asesmen kimia adaptif untuk pembelajaran presisi
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-7 text-balance text-5xl font-black leading-[1.02] tracking-normal text-[#0F172A] sm:text-6xl lg:text-7xl"
+          >
+            Ukur pemahaman kimia,
+            <span className="block text-[#1A73E8]">bukan sekadar nilai.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.18 }}
+            className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-8 text-[#475569] sm:text-lg"
+          >
+            AKURAT membantu siswa belajar stoikiometri lewat materi terstruktur, quiz adaptif,
+            ujian MSAT, dan laporan miskonsepsi yang bisa langsung ditindaklanjuti guru.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.26 }}
+            className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          >
+            <Link
+              href="/register"
+              className="group inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#1A73E8] px-7 text-base font-extrabold text-white shadow-[0_18px_36px_-18px_rgba(26,115,232,0.95)] transition hover:-translate-y-0.5 hover:bg-[#155FC3]"
+            >
+              Mulai gratis
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              href="/dashboard/courses"
+              className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl border-2 border-[#D9EEF2] bg-white/85 px-7 text-base font-extrabold text-[#0F172A] shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-[#00C2FF]"
+            >
+              <Play className="h-4 w-4 fill-[#FF9500] text-[#FF9500]" />
+              Lihat materi
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.34 }}
+            className="mx-auto mt-9 grid max-w-3xl gap-3 sm:grid-cols-3"
+          >
+            {metrics.map((metric) => (
+              <div
+                key={metric.label}
+                className="rounded-2xl border border-white/80 bg-white/75 px-4 py-3 text-center shadow-sm backdrop-blur"
+              >
+                <p className="text-2xl font-black text-[#0F172A]">{metric.value}</p>
+                <p className="mt-1 text-xs font-bold text-[#1A73E8]">{metric.label}</p>
+                <p className="mt-1 text-[11px] leading-4 text-[#64748B]">{metric.helper}</p>
+              </div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* Scroll indicator */}
-        <FadeIn direction="up" delay={0.8}>
-          <div className="flex justify-center pb-8">
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="flex flex-col items-center gap-1.5 text-xs text-[#94A3B8]"
-            >
-              <span>Scroll untuk lebih</span>
-              <div className="h-5 w-[1px] rounded-full bg-gradient-to-b from-[#94A3B8] to-transparent" />
-            </motion.div>
-          </div>
-        </FadeIn>
+        <ProductPreview />
       </div>
     </section>
   )

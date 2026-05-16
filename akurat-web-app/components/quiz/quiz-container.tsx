@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -149,11 +149,13 @@ function ResultScreen({
   onRetry: () => void
 }) {
   const router = useRouter()
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+  const [windowSize] = useState(() => ({
+    width: typeof window === 'undefined' ? 0 : window.innerWidth,
+    height: typeof window === 'undefined' ? 0 : window.innerHeight,
+  }))
   const [showConfetti, setShowConfetti] = useState(passed)
 
   useEffect(() => {
-    setWindowSize({ width: window.innerWidth, height: window.innerHeight })
     if (passed) {
       const timer = setTimeout(() => setShowConfetti(false), 5000)
       return () => clearTimeout(timer)
@@ -336,27 +338,6 @@ export function QuizContainer({ quizId }: QuizContainerProps) {
     init()
   }, [quizId, router])
 
-  // Per-question timer
-  useEffect(() => {
-    if (phase !== 'quiz' || timeLeft === null) return
-
-    timerRef.current = setInterval(() => {
-      setTimeLeft((t) => {
-        if (t === null || t <= 1) {
-          clearInterval(timerRef.current!)
-          // Auto-reveal when time's up
-          handleReveal(null)
-          return 0
-        }
-        return t - 1
-      })
-    }, 1000)
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current)
-    }
-  }, [phase, currentIndex]) // eslint-disable-line react-hooks/exhaustive-deps
-
   const currentQuestion: QuestionWithOptions | undefined =
     quiz?.questions[currentIndex]
 
@@ -365,37 +346,54 @@ export function QuizContainer({ quizId }: QuizContainerProps) {
     setAnswer((prev) => ({ ...prev, selectedOptionId: optionId }))
   }
 
-  const handleReveal = useCallback(
-    async (selectedId: string | null) => {
-      if (!currentQuestion || !attemptId) return
+  async function handleReveal(selectedId: string | null) {
+    if (!currentQuestion || !attemptId) return
+    if (timerRef.current) clearInterval(timerRef.current)
+
+    const optionId = selectedId ?? answer.selectedOptionId
+    const correctOption = currentQuestion.question_options.find(
+      (option) => option.is_correct
+    )
+    const isCorrect =
+      optionId !== null && optionId === correctOption?.id
+
+    setAnswer((prev) => ({
+      ...prev,
+      selectedOptionId: optionId,
+      isCorrect,
+      revealed: true,
+    }))
+
+    if (isCorrect) {
+      setCorrectCount((count) => count + 1)
+      setShowXpBurst(true)
+      setTimeout(() => setShowXpBurst(false), 1200)
+    }
+
+    if (optionId) {
+      await submitAnswer(attemptId, currentQuestion.id, optionId, isCorrect)
+    }
+  }
+
+  // Per-question timer
+  useEffect(() => {
+    if (phase !== 'quiz' || timeLeft === null) return
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((time) => {
+        if (time === null || time <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current)
+          void handleReveal(null)
+          return 0
+        }
+        return time - 1
+      })
+    }, 1000)
+
+    return () => {
       if (timerRef.current) clearInterval(timerRef.current)
-
-      const optionId = selectedId ?? answer.selectedOptionId
-      const correctOption = currentQuestion.question_options.find(
-        (o) => o.is_correct
-      )
-      const isCorrect =
-        optionId !== null && optionId === correctOption?.id
-
-      setAnswer((prev) => ({
-        ...prev,
-        selectedOptionId: optionId,
-        isCorrect,
-        revealed: true,
-      }))
-
-      if (isCorrect) {
-        setCorrectCount((c) => c + 1)
-        setShowXpBurst(true)
-        setTimeout(() => setShowXpBurst(false), 1200)
-      }
-
-      if (optionId) {
-        await submitAnswer(attemptId, currentQuestion.id, optionId, isCorrect)
-      }
-    },
-    [answer.selectedOptionId, currentQuestion, attemptId]
-  )
+    }
+  }, [phase, currentIndex]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNext = async () => {
     if (!quiz || !userId || !attemptId) return
@@ -481,7 +479,6 @@ export function QuizContainer({ quizId }: QuizContainerProps) {
   if (!quiz || !currentQuestion) return null
 
   const totalQ = quiz.questions.length
-  const progressPct = currentIndex / totalQ
 
   return (
     <div className="mx-auto max-w-2xl">

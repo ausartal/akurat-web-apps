@@ -1,8 +1,11 @@
 import { createClient } from '@/lib/supabase/client'
+import type { Tables } from '@/src/types/database'
 
 const supabase = createClient()
 
-export async function getCourses() {
+export type Course = Tables<'courses'>
+
+export async function getCourses(): Promise<Course[]> {
   const { data, error } = await supabase
     .from('courses')
     .select('*')

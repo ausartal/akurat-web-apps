@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, ReactNode } from 'react'
+import { useRef, ReactNode } from 'react'
 import { motion, useInView, Variants } from 'framer-motion'
 
 // ─── Shared motion presets ───────────────────────────────────────────────────
